@@ -39,39 +39,34 @@
   </ItemGroup>
 
 
-  <ItemGroup>
-    <None Include="Frost_PLD\Frost_PLD_SlotResolvers\BOSS战斗中_GCD\BOSS中_战逃外战女神之怒.cs" />
-    <None Include="Frost_PLD\Frost_PLD_SlotResolvers\BOSS战斗中_GCD\BOSS中_战逃外葬送剑即将过期.cs" />
-  </ItemGroup>
-
 
   <ItemGroup>
     <Reference Include="AEAssist">
-      <HintPath>C:\Users\31712\OneDrive\FF14Dev\AEAssistENVersion\AEAssist\AEAssist.dll</HintPath>
+      <HintPath>C:\Users\31712\OneDrive\FF14Dev\AEAssistCNVersion\AEAssist\AEAssist.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Dalamud">
-      <HintPath>C:\Users\31712\AppData\Roaming\XIVLauncher\addon\Hooks\dev\Dalamud.dll</HintPath>
+      <HintPath>C:\Users\31712\AppData\Roaming\XIVLauncherCN\addon\Hooks\dev\Dalamud.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="ECommons">
-      <HintPath>C:\Users\31712\OneDrive\FF14Dev\AEAssistENVersion\AEAssist\ECommons.dll</HintPath>
+      <HintPath>C:\Users\31712\OneDrive\FF14Dev\AEAssistCNVersion\AEAssist\ECommons.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="FFXIVClientStructs">
-      <HintPath>C:\Users\31712\AppData\Roaming\XIVLauncher\addon\Hooks\dev\FFXIVClientStructs.dll</HintPath>
+      <HintPath>C:\Users\31712\AppData\Roaming\XIVLauncherCN\addon\Hooks\dev\FFXIVClientStructs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="ImGui.NET">
-      <HintPath>C:\Users\31712\AppData\Roaming\XIVLauncher\addon\Hooks\dev\ImGui.NET.dll</HintPath>
+      <HintPath>C:\Users\31712\AppData\Roaming\XIVLauncherCN\addon\Hooks\dev\ImGui.NET.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Lumina">
-      <HintPath>C:\Users\31712\AppData\Roaming\XIVLauncher\addon\Hooks\dev\Lumina.dll</HintPath>
+      <HintPath>C:\Users\31712\AppData\Roaming\XIVLauncherCN\addon\Hooks\dev\Lumina.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Lumina.Excel">
-      <HintPath>C:\Users\31712\AppData\Roaming\XIVLauncher\addon\Hooks\dev\Lumina.Excel.dll</HintPath>
+      <HintPath>C:\Users\31712\AppData\Roaming\XIVLauncherCN\addon\Hooks\dev\Lumina.Excel.dll</HintPath>
       <Private>False</Private>
     </Reference>
   </ItemGroup>
