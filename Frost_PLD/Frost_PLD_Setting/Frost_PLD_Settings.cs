@@ -60,8 +60,8 @@ public class Frost_PLD_Settings
     public Dictionary<string, bool> QT配置 = new();
     public Dictionary<string, TargetType> DefaultTargets = new Dictionary<string, TargetType>
     {
-        { "冲刺", TargetType.自身 },
         { "钢铁信念", TargetType.自身 },
+        { "冲刺", TargetType.自身 },
         { "极致防御", TargetType.自身 },
         { "壁垒", TargetType.自身 },
         { "圣盾阵", TargetType.自身 },

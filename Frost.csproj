@@ -27,20 +27,6 @@
 
 
   <ItemGroup>
-    <Folder Include="Frost_PLD\Frost_PLD_SlotResolvers\DefenceOGCD\" />
-    <Folder Include="Frost_PLD\Frost_PLD_SlotResolvers\小怪战斗中_AttackOGCD\" />
-    <Folder Include="Frost_PLD\Frost_PLD_SlotResolvers\小怪战斗中_GCD\" />
-    <Folder Include="Frost_PLD\Frost_PLD_SlotResolvers\小怪战斗即将结束_AttackOGCD\" />
-    <Folder Include="Frost_PLD\Frost_PLD_SlotResolvers\小怪战斗即将结束_GCD\" />
-    <Folder Include="Frost_PLD\Frost_PLD_SlotResolvers\拉怪_AttackOGCD\" />
-    <Folder Include="Frost_PLD\Frost_PLD_SlotResolvers\拉怪_GCD\" />
-    <Folder Include="Frost_PLD\Frost_PLD_SlotResolvers\泄资源_AttackOGCD\" />
-    <Folder Include="Frost_PLD\Frost_PLD_SlotResolvers\泄资源_GCD\" />
-  </ItemGroup>
-
-
-
-  <ItemGroup>
     <Reference Include="AEAssist">
       <HintPath>C:\Users\31712\OneDrive\FF14Dev\AEAssistCNVersion\AEAssist\AEAssist.dll</HintPath>
       <Private>False</Private>

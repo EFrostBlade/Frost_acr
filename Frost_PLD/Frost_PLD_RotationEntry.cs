@@ -167,8 +167,8 @@ public class Frost_PLD_RotationEntry : IRotationEntry
         Frost_PLD_Settings Setting = Frost_PLD_Settings.Instance;
         scWindow= new SCWindow();
         // 添加按钮
-        scWindow.AddSC("冲刺", Setting.cd预检测阈值, false, TargetType.自身);
         scWindow.AddSC("钢铁信念", Setting.cd预检测阈值, false, TargetType.自身);
+        scWindow.AddSC("冲刺", Setting.cd预检测阈值, false, TargetType.自身);
         scWindow.AddSC("极致防御", Setting.cd预检测阈值, false, TargetType.自身);
         scWindow.AddSC("壁垒", Setting.cd预检测阈值, false, TargetType.自身);
         scWindow.AddSC("圣盾阵", Setting.cd预检测阈值, false, TargetType.自身);
@@ -212,6 +212,7 @@ public class Frost_PLD_RotationEntry : IRotationEntry
 
         //以下是技能使用
         new(new 技能使用_冲刺(),SlotMode.Always),
+        new(new 技能使用_钢铁信念(),SlotMode.Always),
 
         //以下是GCD        
         new(new BOSS中_战逃葬送剑即将过期(),SlotMode.Always),

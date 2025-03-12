@@ -162,6 +162,21 @@ namespace Frost.Frost_PLD
                     Frost_PLD_DutyData.Instance.上次疾跑时间 = DateTime.Now;
                 }
 
+                if (spell.Id == (uint)PLDActionID.钢铁信念)
+                {
+                    LogHelper.Print("技能使用", $"钢铁信念 已成功对{spell.GetTarget().Name}使用");
+                    SC.SetSC("钢铁信念", false);
+                    settings.SetDefaultSC("钢铁信念");
+                    Frost_PLD_DutyData.Instance.上次疾跑时间 = DateTime.Now;
+                }
+                if (spell.Id == (uint)PLDActionID.解除钢铁信念)
+                {
+                    LogHelper.Print("技能使用", $"解除钢铁信念 已成功对{spell.GetTarget().Name}使用");
+                    SC.SetSC("钢铁信念", false);
+                    settings.SetDefaultSC("钢铁信念");
+                    Frost_PLD_DutyData.Instance.上次疾跑时间 = DateTime.Now;
+                }
+
             }
         }
 
