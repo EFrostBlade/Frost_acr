@@ -1,0 +1,80 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0-windows10.0.17763.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+    <SupportedOSPlatformVersion>10.0.17763.0</SupportedOSPlatformVersion>
+    <PlatformTarget>x64</PlatformTarget>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <!-- 启用 Fody -->
+    <FodyWeavingTaskAssemblyPath>$(NuGetPackageRoot)fody.fody/6.5.5/build/FodyWeavingTask.dll</FodyWeavingTaskAssemblyPath>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>C:\Users\31712\OneDrive\FF14Dev\ACR\Frost\</OutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>C:\Users\31712\OneDrive\FF14Dev\ACR\Frost\</OutputPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Folder Include="Frost_PLD\Frost_PLD_SlotResolvers\DefenceOGCD\" />
+    <Folder Include="Frost_PLD\Frost_PLD_SlotResolvers\小怪战斗中_AttackOGCD\" />
+    <Folder Include="Frost_PLD\Frost_PLD_SlotResolvers\小怪战斗中_GCD\" />
+    <Folder Include="Frost_PLD\Frost_PLD_SlotResolvers\小怪战斗即将结束_AttackOGCD\" />
+    <Folder Include="Frost_PLD\Frost_PLD_SlotResolvers\小怪战斗即将结束_GCD\" />
+    <Folder Include="Frost_PLD\Frost_PLD_SlotResolvers\拉怪_AttackOGCD\" />
+    <Folder Include="Frost_PLD\Frost_PLD_SlotResolvers\拉怪_GCD\" />
+    <Folder Include="Frost_PLD\Frost_PLD_SlotResolvers\泄资源_AttackOGCD\" />
+    <Folder Include="Frost_PLD\Frost_PLD_SlotResolvers\泄资源_GCD\" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <None Include="Frost_PLD\Frost_PLD_SlotResolvers\BOSS战斗中_GCD\BOSS中_战逃外战女神之怒.cs" />
+    <None Include="Frost_PLD\Frost_PLD_SlotResolvers\BOSS战斗中_GCD\BOSS中_战逃外葬送剑即将过期.cs" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Reference Include="AEAssist">
+      <HintPath>C:\Users\31712\OneDrive\FF14Dev\AEAssistENVersion\AEAssist\AEAssist.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Dalamud">
+      <HintPath>C:\Users\31712\AppData\Roaming\XIVLauncher\addon\Hooks\dev\Dalamud.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="ECommons">
+      <HintPath>C:\Users\31712\OneDrive\FF14Dev\AEAssistENVersion\AEAssist\ECommons.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="FFXIVClientStructs">
+      <HintPath>C:\Users\31712\AppData\Roaming\XIVLauncher\addon\Hooks\dev\FFXIVClientStructs.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="ImGui.NET">
+      <HintPath>C:\Users\31712\AppData\Roaming\XIVLauncher\addon\Hooks\dev\ImGui.NET.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Lumina">
+      <HintPath>C:\Users\31712\AppData\Roaming\XIVLauncher\addon\Hooks\dev\Lumina.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Lumina.Excel">
+      <HintPath>C:\Users\31712\AppData\Roaming\XIVLauncher\addon\Hooks\dev\Lumina.Excel.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+  </ItemGroup>
+  
+
+</Project>
