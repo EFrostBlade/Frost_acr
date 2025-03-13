@@ -60,17 +60,6 @@ public class Frost_PLD_Settings
     public Dictionary<string, bool> QT配置 = new();
     public Dictionary<string, TargetType> DefaultTargets = new Dictionary<string, TargetType>
     {
-        { "钢铁信念", TargetType.自身 },
-        { "冲刺", TargetType.自身 },
-        { "极致防御", TargetType.自身 },
-        { "壁垒", TargetType.自身 },
-        { "圣盾阵", TargetType.自身 },
-        { "神圣领域", TargetType.自身 },
-        { "圣光幕帘", TargetType.自身 },
-        { "铁壁", TargetType.自身 },
-        { "武装戍卫", TargetType.自身 },
-        { "雪仇", TargetType.自身 },
-        { "亲疏自行", TargetType.自身 },
         { "调停", TargetType.当前目标 },
         { "下踢", TargetType.当前目标 },
         { "插言", TargetType.当前目标 },
@@ -113,22 +102,28 @@ public class Frost_PLD_Settings
         var scWindow = Frost_PLD_RotationEntry.scWindow;
         scWindow.SetSCDuration(name, cd预检测阈值);
         scWindow.SetSCForceInsert(name, false);
-        if (DefaultTargets[name] == TargetType.Name || DefaultTargets[name] == TargetType.DataID)
+        if (DefaultTargets.ContainsKey(name))
         {
-            if (DefaultTargetsInfo.ContainsKey(name))
+            if (DefaultTargets[name] == TargetType.Name || DefaultTargets[name] == TargetType.DataID)
             {
-                scWindow.SetSCTarget(name, DefaultTargets[name], DefaultTargetsInfo[name]);
+                if (DefaultTargetsInfo.ContainsKey(name))
+                {
+                    scWindow.SetSCTarget(name, DefaultTargets[name], DefaultTargetsInfo[name]);
+                }
+                else
+                {
+                    LogHelper.Print($"技能{name}的默认目标信息未设置");
+                }
             }
             else
             {
-                LogHelper.Print($"技能{name}的默认目标信息未设置");
+                scWindow.SetSCTarget(name, DefaultTargets[name]);
             }
         }
         else
         {
-            scWindow.SetSCTarget(name, DefaultTargets[name]);
+            scWindow.SetSCTarget(name, TargetType.自身);
         }
-
     }
 
 

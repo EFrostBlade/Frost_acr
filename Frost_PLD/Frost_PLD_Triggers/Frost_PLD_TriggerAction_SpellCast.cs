@@ -17,6 +17,11 @@ namespace Frost.Frost_PLD.Frost_PLD_Triggers
         public string Remark { get; set; }
 
         private int _selectIndex;
+        private float _waitTime = 0f;
+        private bool _forceInsert = false;
+        private int _targetIndex = 0;
+        private string[] _targetOptions = Enum.GetNames(typeof(Common.TargetType));
+
         private enum _SpellArray : uint
         {
             冲刺 = 3u,
@@ -48,7 +53,11 @@ namespace Frost.Frost_PLD.Frost_PLD_Triggers
         public bool Draw()
         {
             ImGuiHelper.LeftCombo("技能", ref _selectIndex, _spellNameArray);
-
+            ImGui.Separator();
+            // 新增等待时间、强制插入以及目标选择的UI
+            ImGui.InputFloat("等待时间（秒）", ref _waitTime, 0.1f, 1f, "%.2f");
+            ImGui.Checkbox("强制插入", ref _forceInsert);
+            ImGui.Combo("技能目标", ref _targetIndex, _targetOptions, _targetOptions.Length);
             return true;
         }
 
@@ -56,93 +65,20 @@ namespace Frost.Frost_PLD.Frost_PLD_Triggers
         {
             if (_selectIndex >= 0 && _selectIndex < _spellValueArray.Length)
             {
-                uint spellId = _spellValueArray[_selectIndex];
-                string spellName = _spellNameArray[_selectIndex];
-
-                // 使用Task.Run避免阻塞主线程
-                Task.Run(async () =>
-                {
-                    try
-                    {
-                        // 检查技能是否可用
-                        if (CanUseSpell(spellId))
-                        {
-                            // 对技能类型进行分类处理
-                            await CastSpell(spellId);
-                            Frost_PLD_RotationEntry.Frost_PLD_ArcUI.AddLog($"成功使用技能: {spellName}");
-                        }
-                        else
-                        {
-                            Frost_PLD_RotationEntry.Frost_PLD_ArcUI.AddLog($"技能使用失败: {spellName}，可能在冷却或不符合使用条件");
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        Frost_PLD_RotationEntry.Frost_PLD_ArcUI.AddLog($"技能使用异常: {ex.Message}");
-                    }
-                });
-
+                string skillName = _spellNameArray[_selectIndex];
+                // 修改：不再释放技能
+                // 而是配置对应的SC按钮
+                Frost_PLD_RotationEntry.scWindow.SetSCDuration(skillName, _waitTime);
+                Frost_PLD_RotationEntry.scWindow.SetSCForceInsert(skillName, _forceInsert);
+                // 将下拉选中的目标值转换为枚举
+                Common.TargetType targetValue = (Common.TargetType)Enum.Parse(typeof(Common.TargetType), _targetOptions[_targetIndex]);
+                Frost_PLD_RotationEntry.scWindow.SetSCTarget(skillName, targetValue);
+                Frost_PLD_RotationEntry.scWindow.SetSC(skillName, true);
+                Frost_PLD_RotationEntry.Frost_PLD_ArcUI.AddLog($"SC按钮激活: {skillName}, 等待时间: {_waitTime}秒, 强制插入: {_forceInsert}, 目标: {targetValue}");
                 return true;
             }
 
             return false;
         }
-
-        // 检查技能是否可用
-        private bool CanUseSpell(uint spellId)
-        {
-            var spell = SpellHelper.GetSpell(spellId);
-
-            // 技能未解锁
-            if (!spell.IsUnlock())
-                return false;
-
-            // 技能在冷却中
-            if (spell.Cooldown.TotalSeconds > 0)
-                return false;
-
-            // 如果是有充能的技能，检查充能数
-            if (spell.Charges < 1)
-                return false;
-
-            return true;
-        }
-
-        // 根据技能类型使用对应的施法方法
-        private async Task CastSpell(uint spellId)
-        {
-            // 尝试发动技能
-            var spell = SpellHelper.GetSpell(spellId);
-
-            // 针对特定技能的特殊处理
-            switch (spellId)
-            {
-                case (uint)PLDActionID.干预:
-                case (uint)PLDActionID.深仁厚泽:
-                case (uint)PLDActionID.保护:
-                    // 这些技能需要目标，如果有队友目标则使用，否则选择队伍中血量最低成员
-                    await CastSpellOnPartyMember(spellId);
-                    break;
-
-                case (uint)PLDActionID.挑衅:
-                    // 挑衅技能需要敌人目标
-                    await CastSpellOnEnemy(spellId);
-                    break;
-
-                default:
-                    // 默认使用技能（无目标或以自身为目标）
-                    await spell.Cast();
-                    break;
-            }
-        }
-
-        // 对队友使用技能
-        private async Task CastSpellOnPartyMember(uint spellId)
-        {
-        }
-
-        // 对敌人使用技能
-        private async Task CastSpellOnEnemy(uint spellId)
-        { }
     }
 }

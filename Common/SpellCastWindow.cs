@@ -337,6 +337,13 @@ namespace Frost.Common
 
             return 0;
         }
+        /// <summary>
+        /// 获取按钮激活时间
+        /// </summary>
+        public DateTime GetSCActivationTime(string name)
+        {
+            return buttons.TryGetValue(name, out var button) ? button.ActivationTime : DateTime.MinValue;
+        }
 
         /// <summary>
         /// 绘制窗口
@@ -358,6 +365,12 @@ namespace Frost.Common
 
             // 绘制窗口
             ImGui.Begin(title, ref isVisible, flags);
+            // 居中显示提示文字
+            string tipText = "左键点击插入技能，右键点击强制插入";
+            Vector2 tipSize = ImGui.CalcTextSize(tipText);
+            float availWidth = ImGui.GetContentRegionAvail().X;
+            ImGui.SetCursorPosX((availWidth - tipSize.X) / 2f);
+            ImGui.Text(tipText);
 
             int columnCount = 0;
 
@@ -396,6 +409,12 @@ namespace Frost.Common
                     bool newState = !button.IsActive;
                     //LogHelper.Print($"按钮 {name} 被点击，当前状态={button.IsActive}，将设置为={newState}");
                     SetSC(name, newState);
+                }
+                // 新增：右键点击时将强制插入置为true并激活
+                if (ImGui.IsItemClicked(ImGuiMouseButton.Right))
+                {
+                    SetSCForceInsert(name, true);
+                    SetSC(name, true);
                 }
 
                 // 如果按钮激活且需要显示倒计时，在按钮上叠加倒计时文本

@@ -142,7 +142,6 @@ namespace Frost.Frost_PLD
                 ImGui.NextColumn();
             }
 
-            ImGui.Columns(1);
         }
         static Frost_PLD_AcrUi()
         {
@@ -209,7 +208,7 @@ namespace Frost.Frost_PLD
             interpolatedStringHandler.AppendLiteral($"是否开盾：{battleData.是否开盾}");
             ImGui.Text(interpolatedStringHandler.ToStringAndClear());
             interpolatedStringHandler = new DefaultInterpolatedStringHandler(10, 1);
-            interpolatedStringHandler.AppendLiteral($"自身坐标：{Core.Me.Position}");
+            interpolatedStringHandler.AppendLiteral($"自身坐标：{Core.Me.Position} {Core.Me.Rotation}");
             ImGui.Text(interpolatedStringHandler.ToStringAndClear());
             interpolatedStringHandler = new DefaultInterpolatedStringHandler(10, 1);
             interpolatedStringHandler.AppendLiteral("目标的目标：");

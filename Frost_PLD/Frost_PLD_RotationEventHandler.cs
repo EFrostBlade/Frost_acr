@@ -145,7 +145,7 @@ namespace Frost.Frost_PLD
                     battleData.上次魔法连击技能 = spell.Id;
                     battleData.上次魔法连击时间 = battleData.战斗开始时长;
                 }
-                if (spell.Id == (uint)PLDActionID.先锋剑
+                else if (spell.Id == (uint)PLDActionID.先锋剑
                     || spell.Id == (uint)PLDActionID.暴乱剑
                     || spell.Id == (uint)PLDActionID.战女神之怒
                     || spell.Id == (uint)PLDActionID.王权剑)
@@ -154,27 +154,301 @@ namespace Frost.Frost_PLD
                     battleData.上次魔法连击时间 = 0;
                 }
 
-                if (spell.Id == (uint)PLDActionID.冲刺)
+                else if (spell.Id == (uint)PLDActionID.冲刺)
                 {
-                    LogHelper.Print("技能使用", $"冲刺 已成功对{spell.GetTarget().Name}使用");
-                    SC.SetSC("冲刺", false);
-                    settings.SetDefaultSC("冲刺");
+                    string _spellName = spell.Name;
+                    if (SC.GetSC(_spellName))
+                    {
+                        LogHelper.Print("技能使用", $"{_spellName} 已成功对{spell.GetTarget().Name}使用,距离激活{(DateTime.Now - SC.GetSCActivationTime(_spellName)).TotalSeconds:F2}秒");
+                        SC.SetSC(_spellName, false);
+                        settings.SetDefaultSC(_spellName);
+                    }
+                    else
+                    {
+                        LogHelper.Print("技能使用", $"{_spellName} 已成功对{spell.GetTarget().Name}使用，使用了不推荐的方式，推荐使用acr中的技能使用来使用技能");
+                    }
                     Frost_PLD_DutyData.Instance.上次疾跑时间 = DateTime.Now;
                 }
 
-                if (spell.Id == (uint)PLDActionID.钢铁信念)
+                else if (spell.Id == (uint)PLDActionID.钢铁信念)
                 {
-                    LogHelper.Print("技能使用", $"钢铁信念 已成功对{spell.GetTarget().Name}使用");
-                    SC.SetSC("钢铁信念", false);
-                    settings.SetDefaultSC("钢铁信念");
-                    Frost_PLD_DutyData.Instance.上次疾跑时间 = DateTime.Now;
+                    string _spellName = spell.Name;
+                    if (SC.GetSC(_spellName))
+                    {
+                        LogHelper.Print("技能使用", $"{_spellName} 已成功对{spell.GetTarget().Name}使用,距离激活{(DateTime.Now - SC.GetSCActivationTime(_spellName)).TotalSeconds:F2}秒");
+                        SC.SetSC(_spellName, false);
+                        settings.SetDefaultSC(_spellName);
+                    }
+                    else
+                    {
+                        LogHelper.Print("技能使用", $"{_spellName} 已成功对{spell.GetTarget().Name}使用，使用了不推荐的方式，推荐使用acr中的技能使用来使用技能");
+                    }
                 }
-                if (spell.Id == (uint)PLDActionID.解除钢铁信念)
+                else if (spell.Id == (uint)PLDActionID.解除钢铁信念)
                 {
-                    LogHelper.Print("技能使用", $"解除钢铁信念 已成功对{spell.GetTarget().Name}使用");
-                    SC.SetSC("钢铁信念", false);
-                    settings.SetDefaultSC("钢铁信念");
-                    Frost_PLD_DutyData.Instance.上次疾跑时间 = DateTime.Now;
+                    string _spellName = spell.Name;
+                    if (SC.GetSC("钢铁信念"))
+                    {
+                        LogHelper.Print("技能使用", $"{_spellName} 已成功对{spell.GetTarget().Name}使用,距离激活{(DateTime.Now - SC.GetSCActivationTime(_spellName)).TotalSeconds:F2}秒");
+                        SC.SetSC("钢铁信念", false);
+                        settings.SetDefaultSC("钢铁信念");
+                    }
+                    else
+                    {
+                        LogHelper.Print("技能使用", $"{_spellName} 已成功对{spell.GetTarget().Name}使用，使用了不推荐的方式，推荐使用acr中的技能使用来使用技能");
+                    }
+                }
+                else if (spell.Id == (uint)PLDActionID.极致防御)
+                {
+                    string _spellName = spell.Name;
+                    if (SC.GetSC(_spellName))
+                    {
+                        LogHelper.Print("技能使用", $"{_spellName} 已成功对{spell.GetTarget().Name}使用,距离激活{(DateTime.Now - SC.GetSCActivationTime(_spellName)).TotalSeconds:F2}秒");
+                        SC.SetSC(_spellName, false);
+                        settings.SetDefaultSC(_spellName);
+                    }
+                    else
+                    {
+                        LogHelper.Print("技能使用", $"{_spellName} 已成功对{spell.GetTarget().Name}使用，使用了不推荐的方式，推荐使用acr中的技能使用来使用技能");
+                    }
+                }
+                else if (spell.Id == (uint)PLDActionID.预警)
+                {
+                    string _spellName = spell.Name;
+                    if (SC.GetSC("极致防御"))
+                    {
+                        LogHelper.Print("技能使用", $"{_spellName} 已成功对{spell.GetTarget().Name}使用,距离激活{(DateTime.Now - SC.GetSCActivationTime("极致防御")).TotalSeconds:F2}秒");
+                        SC.SetSC("极致防御", false);
+                        settings.SetDefaultSC("极致防御");
+                    }
+                    else
+                    {
+                        LogHelper.Print("技能使用", $"{_spellName} 已成功对{spell.GetTarget().Name}使用，使用了不推荐的方式，推荐使用acr中的技能使用来使用技能");
+                    }
+                }
+                else if (spell.Id == (uint)PLDActionID.壁垒)
+                {
+                    string _spellName = spell.Name;
+                    if (SC.GetSC(_spellName))
+                    {
+                        LogHelper.Print("技能使用", $"{_spellName} 已成功对{spell.GetTarget().Name}使用,距离激活{(DateTime.Now - SC.GetSCActivationTime(_spellName)).TotalSeconds:F2}秒");
+                        SC.SetSC(_spellName, false);
+                        settings.SetDefaultSC(_spellName);
+                    }
+                    else
+                    {
+                        LogHelper.Print("技能使用", $"{_spellName} 已成功对{spell.GetTarget().Name}使用，使用了不推荐的方式，推荐使用acr中的技能使用来使用技能");
+                    }
+                }
+                else if (spell.Id == (uint)PLDActionID.圣盾阵)
+                {
+                    string _spellName = spell.Name;
+                    if (SC.GetSC(_spellName))
+                    {
+                        LogHelper.Print("技能使用", $"{_spellName} 已成功对{spell.GetTarget().Name}使用,距离激活{(DateTime.Now - SC.GetSCActivationTime(_spellName)).TotalSeconds:F2}秒");
+                        SC.SetSC(_spellName, false);
+                        settings.SetDefaultSC(_spellName);
+                    }
+                    else
+                    {
+                        LogHelper.Print("技能使用", $"{_spellName} 已成功对{spell.GetTarget().Name}使用，使用了不推荐的方式，推荐使用acr中的技能使用来使用技能");
+                    }
+                }
+                else if (spell.Id == (uint)PLDActionID.盾阵)
+                {
+                    string _spellName = spell.Name;
+                    if (SC.GetSC(_spellName))
+                    {
+                        LogHelper.Print("技能使用", $"{_spellName} 已成功对{spell.GetTarget().Name}使用,距离激活{(DateTime.Now - SC.GetSCActivationTime("圣盾阵")).TotalSeconds:F2}秒");
+                        SC.SetSC("圣盾阵", false);
+                        settings.SetDefaultSC("圣盾阵");
+                    }
+                    else
+                    {
+                        LogHelper.Print("技能使用", $"{_spellName} 已成功对{spell.GetTarget().Name}使用，使用了不推荐的方式，推荐使用acr中的技能使用来使用技能");
+                    }
+                }
+                else if (spell.Id == (uint)PLDActionID.神圣领域)
+                {
+                    string _spellName = spell.Name;
+                    if (SC.GetSC(_spellName))
+                    {
+                        LogHelper.Print("技能使用", $"{_spellName} 已成功对{spell.GetTarget().Name}使用,距离激活{(DateTime.Now - SC.GetSCActivationTime(_spellName)).TotalSeconds:F2}秒");
+                        SC.SetSC(_spellName, false);
+                        settings.SetDefaultSC(_spellName);
+                    }
+                    else
+                    {
+                        LogHelper.Print("技能使用", $"{_spellName} 已成功对{spell.GetTarget().Name}使用，使用了不推荐的方式，推荐使用acr中的技能使用来使用技能");
+                    }
+                }
+                else if (spell.Id == (uint)PLDActionID.圣光幕帘)
+                {
+                    string _spellName = spell.Name;
+                    if (SC.GetSC(_spellName))
+                    {
+                        LogHelper.Print("技能使用", $"{_spellName} 已成功对{spell.GetTarget().Name}使用,距离激活{(DateTime.Now - SC.GetSCActivationTime(_spellName)).TotalSeconds:F2}秒");
+                        SC.SetSC(_spellName, false);
+                        settings.SetDefaultSC(_spellName);
+                    }
+                    else
+                    {
+                        LogHelper.Print("技能使用", $"{_spellName} 已成功对{spell.GetTarget().Name}使用，使用了不推荐的方式，推荐使用acr中的技能使用来使用技能");
+                    }
+                }
+                else if (spell.Id == (uint)PLDActionID.铁壁)
+                {
+                    string _spellName = spell.Name;
+                    if (SC.GetSC(_spellName))
+                    {
+                        LogHelper.Print("技能使用", $"{_spellName} 已成功对{spell.GetTarget().Name}使用,距离激活{(DateTime.Now - SC.GetSCActivationTime(_spellName)).TotalSeconds:F2}秒");
+                        SC.SetSC(_spellName, false);
+                        settings.SetDefaultSC(_spellName);
+                    }
+                    else
+                    {
+                        LogHelper.Print("技能使用", $"{_spellName} 已成功对{spell.GetTarget().Name}使用，使用了不推荐的方式，推荐使用acr中的技能使用来使用技能");
+                    }
+                }
+                else if (spell.Id == (uint)PLDActionID.武装戍卫)
+                {
+                    string _spellName = spell.Name;
+                    if (SC.GetSC(_spellName))
+                    {
+                        LogHelper.Print("技能使用", $"{_spellName} 已成功对{spell.GetTarget().Name}使用,距离激活{(DateTime.Now - SC.GetSCActivationTime(_spellName)).TotalSeconds:F2}秒");
+                        SC.SetSC(_spellName, false);
+                        settings.SetDefaultSC(_spellName);
+                    }
+                    else
+                    {
+                        LogHelper.Print("技能使用", $"{_spellName} 已成功对{spell.GetTarget().Name}使用，使用了不推荐的方式，推荐使用acr中的技能使用来使用技能");
+                    }
+                }
+                else if (spell.Id == (uint)PLDActionID.雪仇)
+                {
+                    string _spellName = spell.Name;
+                    if (SC.GetSC(_spellName))
+                    {
+                        LogHelper.Print("技能使用", $"{_spellName} 已成功对{spell.GetTarget().Name}使用,距离激活{(DateTime.Now - SC.GetSCActivationTime(_spellName)).TotalSeconds:F2}秒");
+                        SC.SetSC(_spellName, false);
+                        settings.SetDefaultSC(_spellName);
+                    }
+                    else
+                    {
+                        LogHelper.Print("技能使用", $"{_spellName} 已成功对{spell.GetTarget().Name}使用，使用了不推荐的方式，推荐使用acr中的技能使用来使用技能");
+                    }
+                }
+                else if (spell.Id == (uint)PLDActionID.亲疏自行)
+                {
+                    string _spellName = spell.Name;
+                    if (SC.GetSC(_spellName))
+                    {
+                        LogHelper.Print("技能使用", $"{_spellName} 已成功对{spell.GetTarget().Name}使用,距离激活{(DateTime.Now - SC.GetSCActivationTime(_spellName)).TotalSeconds:F2}秒");
+                        SC.SetSC(_spellName, false);
+                        settings.SetDefaultSC(_spellName);
+                    }
+                    else
+                    {
+                        LogHelper.Print("技能使用", $"{_spellName} 已成功对{spell.GetTarget().Name}使用，使用了不推荐的方式，推荐使用acr中的技能使用来使用技能");
+                    }
+                }
+                else if (spell.Id == (uint)PLDActionID.调停)
+                {
+                    string _spellName = spell.Name;
+                    if (SC.GetSC(_spellName))
+                    {
+                        LogHelper.Print("技能使用", $"{_spellName} 已成功对{spell.GetTarget().Name}使用,距离激活{(DateTime.Now - SC.GetSCActivationTime(_spellName)).TotalSeconds:F2}秒");
+                        SC.SetSC(_spellName, false);
+                        settings.SetDefaultSC(_spellName);
+                    }
+                    else
+                    {
+                        LogHelper.Print("技能使用", $"{_spellName} 已成功对{spell.GetTarget().Name}使用，使用了不推荐的方式，推荐使用acr中的技能使用来使用技能");
+                    }
+                }
+                else if (spell.Id == (uint)PLDActionID.下踢)
+                {
+                    string _spellName = spell.Name;
+                    if (SC.GetSC(_spellName))
+                    {
+                        LogHelper.Print("技能使用", $"{_spellName} 已成功对{spell.GetTarget().Name}使用,距离激活{(DateTime.Now - SC.GetSCActivationTime(_spellName)).TotalSeconds:F2}秒");
+                        SC.SetSC(_spellName, false);
+                        settings.SetDefaultSC(_spellName);
+                    }
+                    else
+                    {
+                        LogHelper.Print("技能使用", $"{_spellName} 已成功对{spell.GetTarget().Name}使用，使用了不推荐的方式，推荐使用acr中的技能使用来使用技能");
+                    }
+                }
+                else if (spell.Id == (uint)PLDActionID.插言)
+                {
+                    string _spellName = spell.Name;
+                    if (SC.GetSC(_spellName))
+                    {
+                        LogHelper.Print("技能使用", $"{_spellName} 已成功对{spell.GetTarget().Name}使用,距离激活{(DateTime.Now - SC.GetSCActivationTime(_spellName)).TotalSeconds:F2}秒");
+                        SC.SetSC(_spellName, false);
+                        settings.SetDefaultSC(_spellName);
+                    }
+                    else
+                    {
+                        LogHelper.Print("技能使用", $"{_spellName} 已成功对{spell.GetTarget().Name}使用，使用了不推荐的方式，推荐使用acr中的技能使用来使用技能");
+                    }
+                }
+                else if (spell.Id == (uint)PLDActionID.挑衅)
+                {
+                    string _spellName = spell.Name;
+                    if (SC.GetSC(_spellName))
+                    {
+                        LogHelper.Print("技能使用", $"{_spellName} 已成功对{spell.GetTarget().Name}使用,距离激活{(DateTime.Now - SC.GetSCActivationTime(_spellName)).TotalSeconds:F2}秒");
+                        SC.SetSC(_spellName, false);
+                        settings.SetDefaultSC(_spellName);
+                    }
+                    else
+                    {
+                        LogHelper.Print("技能使用", $"{_spellName} 已成功对{spell.GetTarget().Name}使用，使用了不推荐的方式，推荐使用acr中的技能使用来使用技能");
+                    }
+                }
+                else if (spell.Id == (uint)PLDActionID.退避)
+                {
+                    string _spellName = spell.Name;
+                    if (SC.GetSC(_spellName))
+                    {
+                        LogHelper.Print("技能使用", $"{_spellName} 已成功对{spell.GetTarget().Name}使用,距离激活{(DateTime.Now - SC.GetSCActivationTime(_spellName)).TotalSeconds:F2}秒");
+                        SC.SetSC(_spellName, false);
+                        settings.SetDefaultSC(_spellName);
+                    }
+                    else
+                    {
+                        LogHelper.Print("技能使用", $"{_spellName} 已成功对{spell.GetTarget().Name}使用，使用了不推荐的方式，推荐使用acr中的技能使用来使用技能");
+                    }
+                }
+                else if (spell.Id == (uint)PLDActionID.干预)
+                {
+                    string _spellName = spell.Name;
+                    if (SC.GetSC(_spellName))
+                    {
+                        LogHelper.Print("技能使用", $"{_spellName} 已成功对{spell.GetTarget().Name}使用,距离激活{(DateTime.Now - SC.GetSCActivationTime(_spellName)).TotalSeconds:F2}秒");
+                        SC.SetSC(_spellName, false);
+                        settings.SetDefaultSC(_spellName);
+                    }
+                    else
+                    {
+                        LogHelper.Print("技能使用", $"{_spellName} 已成功对{spell.GetTarget().Name}使用，使用了不推荐的方式，推荐使用acr中的技能使用来使用技能");
+                    }
+                }
+                else if (spell.Id == (uint)PLDActionID.保护)
+                {
+                    string _spellName = spell.Name;
+                    if (SC.GetSC(_spellName))
+                    {
+                        LogHelper.Print("技能使用", $"{_spellName} 已成功对{spell.GetTarget().Name}使用,距离激活{(DateTime.Now - SC.GetSCActivationTime(_spellName)).TotalSeconds:F2}秒");
+                        SC.SetSC(_spellName, false);
+                        settings.SetDefaultSC(_spellName);
+                    }
+                    else
+                    {
+                        LogHelper.Print("技能使用", $"{_spellName} 已成功对{spell.GetTarget().Name}使用，使用了不推荐的方式，推荐使用acr中的技能使用来使用技能");
+                    }
                 }
 
             }
