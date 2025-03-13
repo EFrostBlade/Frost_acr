@@ -21,6 +21,7 @@ using Dalamud.Plugin.Services;
 using AEAssist.Extension;
 using Frost.Common;
 using Dalamud.Interface.Windowing;
+using test.JOB.Opener;
 namespace Frost;
 
 public class Frost_PLD_RotationEntry : IRotationEntry
@@ -144,6 +145,7 @@ public class Frost_PLD_RotationEntry : IRotationEntry
         AddQt("1仇", false, "开启后会尽可能保持1仇");
         AddQt("打完调停", false, "开启后会打完调停层数");
         AddQt("允许突进", false, "开启后允许调停突进");
+        AddQt("爆发药", false, "控制所有爆发药的使用");
         // 添加快捷按钮 (带技能图标)
         Frost_PLD_RotationEntry.JobViewWindow.AddHotkey("爆发药", new HotKeyResolver_Potion());
         Frost_PLD_RotationEntry.JobViewWindow.AddHotkey("极限技", new HotKeyResolver_LB());
@@ -274,7 +276,7 @@ public class Frost_PLD_RotationEntry : IRotationEntry
 
     private IOpener? GetOpener(uint level)//设置起手
     {
-        return new PLD_100_Opener();
+        return new FRU_Opener();
     }
     // 设置界面
     public void OnDrawSetting()

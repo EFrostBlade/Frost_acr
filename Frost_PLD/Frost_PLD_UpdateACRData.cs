@@ -23,6 +23,11 @@ using FFXIVClientStructs.FFXIV.Client.Game;
 using Dalamud.Utility.Signatures;
 using FFXIVClientStructs.FFXIV.Client.Game.Object;
 using Frost.Common;
+using Frost.Frost_PLD.Frost_PLD_Data;
+using Frost.Frost_PLD.Frost_PLD_Data;
+using Frost.Frost_PLD.Frost_PLD_Setting;
+using Frost.Frost_PLD.Frost_PLD_Data;
+using Frost.Frost_PLD.Frost_PLD_Setting;
 
 namespace Frost.Frost_PLD
 {
@@ -676,14 +681,77 @@ namespace Frost.Frost_PLD
         }
         public static async Task OnNoCombat()
         {
-            await QtSpell();
+            await SpellCast();
+            if (Share.Pull)
+            {
+                if (Core.Me.TargetObject != null)
+                {
+                    IBattleChara? target = Core.Me.TargetObject as IBattleChara;
+                    if (target != null)
+                    {
+                        if (GameObjectExtension.CanAttack(target))
+                        {
+                            if (GameObjectExtension.Distance(Core.Me, Core.Me.GetCurrTarget(), DistanceMode.IgnoreAll) <= (float)SettingMgr.GetSetting<GeneralSettings>().AttackRange)
+                            {
+                                if (CanUseOGCD_NoCombat((uint)PLDActionID.先锋剑))
+                                {
+                                    await SpellHelper.GetSpell((uint)PLDActionID.先锋剑, SpellTargetType.Target).Cast();
+                                }
+                            }
+                            else if (GameObjectExtension.Distance(Core.Me, Core.Me.GetCurrTarget(), DistanceMode.IgnoreAll) <= 20)
+                            {
+                                if (CanUseOGCD_NoCombat((uint)PLDActionID.投盾))
+                                {
+                                    if (Core.Resolve<MemApiSpell>().CheckActionInRangeOrLoS((uint)PLDActionID.投盾, target))
+                                    {
+                                        await SpellHelper.GetSpell((uint)PLDActionID.投盾, SpellTargetType.Target).Cast();
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
 
 
-        public static async Task QtSpell()
+        public static async Task SpellCast()
         {
             var battleData = Frost_PLD_BattleData.Instance;
             var QT = Frost_PLD_RotationEntry.JobViewWindow;
+            if (Frost_PLD_Settings.Instance.启用qt控制盾姿)
+            {
+                bool isShieldActive = GameObjectExtension.HasAura(Core.Me, (uint)PLDBuffID.钢铁信念);
+                bool shouldActivateShield = Frost_PLD_RotationEntry.JobViewWindow.GetQt("盾姿");
+                bool isShieldColldown = SpellHelper.GetSpell((uint)PLDActionID.钢铁信念).Cooldown.TotalSeconds == 0 && SpellHelper.GetSpell((uint)PLDActionID.解除钢铁信念).Cooldown.TotalSeconds == 0;
+
+                if (isShieldColldown && shouldActivateShield && !isShieldActive && !SpellHelper.GetSpell((uint)PLDActionID.钢铁信念).RecentlyUsed() && !SpellHelper.GetSpell((uint)PLDActionID.解除钢铁信念).RecentlyUsed())
+                {
+                    Frost_PLD_RotationEntry.Frost_PLD_ArcUI.AddLog("战斗外开盾");
+                    await SpellHelper.GetSpell((uint)PLDActionID.钢铁信念).Cast();
+                }
+                else if (isShieldColldown && !shouldActivateShield && isShieldActive && !SpellHelper.GetSpell((uint)PLDActionID.解除钢铁信念).RecentlyUsed() && !SpellHelper.GetSpell((uint)PLDActionID.钢铁信念).RecentlyUsed())
+                {
+                    Frost_PLD_RotationEntry.Frost_PLD_ArcUI.AddLog("战斗外关盾");
+                    await SpellHelper.GetSpell((uint)PLDActionID.解除钢铁信念).Cast();
+                }
+            }
+            if (Core.Resolve<MemApiCondition>().IsBoundByDuty()
+                && Core.Resolve<MemApiMove>().IsMoving()
+                && Frost_PLD_Settings.Instance.自动疾跑)
+            {
+                if (Frost_PLD_DutyData.Instance.副本人数 == 4 || Frost_PLD_DutyData.Instance.副本人数 == 24)
+                {
+                    if (DateTime.Now - Frost_PLD_DutyData.Instance.上次疾跑时间 > TimeSpan.FromSeconds(60))
+                    {
+                        if (CanUseOGCD_NoCombat((uint)PLDActionID.冲刺))
+                        {
+                            await SpellHelper.GetSpell((uint)PLDActionID.冲刺).Cast();
+                            Frost_PLD_DutyData.Instance.上次疾跑时间 = DateTime.Now;
+                        }
+                    }
+                }
+            }
 
         }
 

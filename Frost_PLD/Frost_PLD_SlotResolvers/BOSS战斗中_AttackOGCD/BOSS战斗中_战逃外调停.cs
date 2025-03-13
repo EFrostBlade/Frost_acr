@@ -10,7 +10,7 @@ using Frost.Frost_PLD.Frost_PLD_Setting;
 
 namespace Frost.Frost_PLD.Frost_PLD_SlotResolvers
 {
-    internal class BOSS战斗中_战逃调停 : Frost_PLD_ISlotResolver
+    internal class BOSS战斗中_战逃外调停 : Frost_PLD_ISlotResolver
     {
         public override int Check()
         {
@@ -22,9 +22,13 @@ namespace Frost.Frost_PLD.Frost_PLD_SlotResolvers
             {
                 return -1;
             }
-            if (BattleData.战逃反应剩余时间 == 0)
+            if (BattleData.战逃反应剩余时间 > 0)
             {
-                return -3;
+                return -2;
+            }
+            if (SpellHelper.GetSpell((uint)PLDActionID.战逃反应).Cooldown.TotalSeconds < 10)
+            {
+                return -4;
             }
             int baseCheck = CanUseAttactOGCD((uint)PLDActionID.调停, false, false);
             if (baseCheck != 0)
@@ -33,7 +37,7 @@ namespace Frost.Frost_PLD.Frost_PLD_SlotResolvers
             }
             if (!QT.GetQt("打完调停"))
             {
-                if (SpellHelper.GetSpell((uint)PLDActionID.调停).Charges < (float)Setting.保留调停层数 + 0.9f)
+                if (SpellHelper.GetSpell((uint)PLDActionID.调停).Charges < (float)Setting.保留调停层数 + 0.95f)
                 {
                     return -400;
                 }

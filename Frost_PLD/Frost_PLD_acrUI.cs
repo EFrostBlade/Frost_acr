@@ -54,9 +54,15 @@ namespace Frost.Frost_PLD
                 Frost_PLD_Settings.Instance.Save();
             }
             float cd预检测阈值 = (float)Frost_PLD_Settings.Instance.cd预检测阈值;
-            if (ImGui.InputFloat("立刻类QT在cd即将多少秒内转好不关闭", ref cd预检测阈值))
+            if (ImGui.InputFloat("技能使用等待时间", ref cd预检测阈值))
             {
                 Frost_PLD_Settings.Instance.cd预检测阈值 = (float)cd预检测阈值;
+                Frost_PLD_Settings.Instance.Save();
+            }
+            int 保留调停层数 = Frost_PLD_Settings.Instance.保留调停层数;
+            if (ImGui.SliderInt("保留调停层数", ref 保留调停层数, 0, 2, $"{保留调停层数}层"))
+            {
+                Frost_PLD_Settings.Instance.保留调停层数 = 保留调停层数;
                 Frost_PLD_Settings.Instance.Save();
             }
             if (ImGui.Checkbox("启用qt控制盾姿", ref Frost_PLD_Settings.Instance.启用qt控制盾姿))

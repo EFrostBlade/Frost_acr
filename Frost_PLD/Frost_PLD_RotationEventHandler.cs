@@ -121,7 +121,7 @@ namespace Frost.Frost_PLD
         }
         public async Task OnNoTarget()
         {
-            await Frost_PLD_UpdateACRData.QtSpell();
+            await Frost_PLD_UpdateACRData.SpellCast();
         }
 
         public void OnSpellCastSuccess(Slot slot, Spell spell)
@@ -360,10 +360,6 @@ namespace Frost.Frost_PLD
                         LogHelper.Print("技能使用", $"{_spellName} 已成功对{spell.GetTarget().Name}使用,距离激活{(DateTime.Now - SC.GetSCActivationTime(_spellName)).TotalSeconds:F2}秒");
                         SC.SetSC(_spellName, false);
                         settings.SetDefaultSC(_spellName);
-                    }
-                    else
-                    {
-                        LogHelper.Print("技能使用", $"{_spellName} 已成功对{spell.GetTarget().Name}使用，使用了不推荐的方式，推荐使用acr中的技能使用来使用技能");
                     }
                 }
                 else if (spell.Id == (uint)PLDActionID.下踢)
