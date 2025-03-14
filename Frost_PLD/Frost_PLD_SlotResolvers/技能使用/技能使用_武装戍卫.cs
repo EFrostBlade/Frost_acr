@@ -89,6 +89,7 @@ namespace Frost.Frost_PLD.Frost_PLD_SlotResolvers
                 }
             }
             string log = $"最佳释放角度{bestAngle} 队友数量{bestCount}";
+            string message = $"将覆盖{bestCount}名队友:";
             if (bestEffectAlly.Count > 0)
             {
                 foreach (var ally in bestEffectAlly)
@@ -97,6 +98,7 @@ namespace Frost.Frost_PLD.Frost_PLD_SlotResolvers
                 }
             }
             Frost_PLD_RotationEntry.Frost_PLD_ArcUI.AddLog(log);
+            LogHelper.Print("武装戍卫", message);
 
 
             // 将最佳面向转换为 SetRot 所需要的弧度值（0代表正南，π/2代表正东，-π/2代表正西）

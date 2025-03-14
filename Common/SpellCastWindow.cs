@@ -7,6 +7,7 @@ using Dalamud.Game.ClientState.Objects.Types;
 using System.Runtime.CompilerServices;
 using AEAssist;
 using AEAssist.Extension;
+using Frost.Frost_PLD.Frost_PLD_Setting;
 
 namespace Frost.Common
 {
@@ -441,6 +442,7 @@ namespace Frost.Common
                     else
                     {
                         SetSC(name, false);
+                        Frost_PLD_Settings.Instance.SetDefaultSC(name);
                         LogHelper.Print("技能插入", $"{name} 在设定时间内使用失败，已自动关闭");
                     }
                 }

@@ -48,26 +48,7 @@ namespace Frost.Frost_PLD
 
             var QT = Frost_PLD_RotationEntry.JobViewWindow;
             var battleData = Frost_PLD_BattleData.Instance;
-            QT.SetQt("保留尽毁", false);
             QT.SetQt("泄资源", false);
-            QT.SetQt("没红斩也泄", false);
-            QT.SetQt("立刻死斗", false);
-            QT.SetQt("立刻退避", false);
-            QT.SetQt("立刻血气", false);
-            QT.SetQt("立刻勇猛", false);
-            QT.SetQt("立刻雪仇", false);
-            QT.SetQt("立刻铁壁", false);
-            QT.SetQt("立刻戮罪", false);
-            QT.SetQt("立刻战栗", false);
-            QT.SetQt("立刻泰然", false);
-            QT.SetQt("立刻摆脱", false);
-            QT.SetQt("强制突进", false);
-            QT.SetQt("立刻突进", false);
-            QT.SetQt("立刻冲刺", false);
-            QT.SetQt("立刻防击退", false);
-            QT.SetQt("立刻爆发药", false);
-            QT.SetQt("立刻勇猛远敏", false);
-            QT.SetQt("立刻勇猛法系", false);
             Frost_PLD_Settings.Instance.SaveQt();
 
             if (Frost_PLD_DutyData.Instance.无法拉仇恨的敌人列表.Count > 0)
@@ -178,10 +159,6 @@ namespace Frost.Frost_PLD
                         LogHelper.Print("技能使用", $"{_spellName} 已成功对{spell.GetTarget().Name}使用,距离激活{(DateTime.Now - SC.GetSCActivationTime(_spellName)).TotalSeconds:F2}秒");
                         SC.SetSC(_spellName, false);
                         settings.SetDefaultSC(_spellName);
-                    }
-                    else
-                    {
-                        LogHelper.Print("技能使用", $"{_spellName} 已成功对{spell.GetTarget().Name}使用，使用了不推荐的方式，推荐使用acr中的技能使用来使用技能");
                     }
                 }
                 else if (spell.Id == (uint)PLDActionID.解除钢铁信念)
@@ -433,6 +410,20 @@ namespace Frost.Frost_PLD
                     }
                 }
                 else if (spell.Id == (uint)PLDActionID.保护)
+                {
+                    string _spellName = spell.Name;
+                    if (SC.GetSC(_spellName))
+                    {
+                        LogHelper.Print("技能使用", $"{_spellName} 已成功对{spell.GetTarget().Name}使用,距离激活{(DateTime.Now - SC.GetSCActivationTime(_spellName)).TotalSeconds:F2}秒");
+                        SC.SetSC(_spellName, false);
+                        settings.SetDefaultSC(_spellName);
+                    }
+                    else
+                    {
+                        LogHelper.Print("技能使用", $"{_spellName} 已成功对{spell.GetTarget().Name}使用，使用了不推荐的方式，推荐使用acr中的技能使用来使用技能");
+                    }
+                }
+                else if (spell.Id == (uint)PLDActionID.深仁厚泽)
                 {
                     string _spellName = spell.Name;
                     if (SC.GetSC(_spellName))

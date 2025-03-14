@@ -54,6 +54,7 @@ public class Frost_PLD_Settings
     public int 无敌血量阈值 = 10;
     public float cd预检测阈值 = 3;
     public float 技能提前时间 = 0.2f;
+    public int 远离投盾圣灵阈值= 500;
     public bool 启用qt控制盾姿 = true;
     public bool 自动挑衅 = true;
     public bool 禁用所有位移技能 = false;

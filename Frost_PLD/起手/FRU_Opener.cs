@@ -80,6 +80,19 @@ public class FRU_Opener : IOpener
     public List<Action<Slot>> Sequence { get; } = new()
     {
         Step0,
+        Step1,
+        Step2,
+        Step3,
+        Step4,
+        Step5,
+        Step6,
+        Step7,
+        Step8,
+        Step9,
+        Step10,
+        Step11,
+        Step12,
+        Step13,
     };
     private static void Step0(Slot slot)
     {

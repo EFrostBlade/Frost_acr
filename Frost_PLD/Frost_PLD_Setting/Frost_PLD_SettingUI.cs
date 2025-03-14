@@ -1,15 +1,20 @@
 ﻿using AEAssist.GUI;
 using ImGuiNET;
 using Frost.Common;
+using Lumina.Excel.Sheets;
 
 namespace Frost.Frost_PLD.Frost_PLD_Setting;
 
 public class Frost_PLD_SettingUI
 {
     public static Frost_PLD_SettingUI Instance = new();
-    public Frost_PLD_Settings Frost_PLD_Settings = Frost_PLD_Settings.Instance;
     
     public void Draw()
+    {
+            DrawSettings();
+    }
+
+    public static void DrawSettings()
     {
         ImGui.Text("Frost_PLD acr设置");
         if (ImGui.Checkbox("禁用所有位移技能", ref Frost_PLD_Settings.Instance.禁用所有位移技能))
@@ -20,6 +25,12 @@ public class Frost_PLD_SettingUI
         if (ImGui.InputFloat("技能使用等待时间", ref cd预检测阈值))
         {
             Frost_PLD_Settings.Instance.cd预检测阈值 = (float)cd预检测阈值;
+            Frost_PLD_Settings.Instance.Save();
+        }
+        int 远离投盾圣灵阈值 = Frost_PLD_Settings.Instance.远离投盾圣灵阈值;
+        if (ImGui.InputInt("远离boss多久后使用投盾圣灵止损(ms)", ref 远离投盾圣灵阈值))
+        {
+            Frost_PLD_Settings.Instance.远离投盾圣灵阈值 = 远离投盾圣灵阈值;
             Frost_PLD_Settings.Instance.Save();
         }
         int 保留调停层数 = Frost_PLD_Settings.Instance.保留调停层数;
@@ -75,18 +86,18 @@ public class Frost_PLD_SettingUI
         string[] targetTypes = Enum.GetNames(typeof(TargetType));
 
         // 遍历默认目标设置（先复制键列表以防修改中错乱）
-        foreach (var skill in Frost_PLD_Settings.DefaultTargets.Keys.ToList())
+        foreach (var skill in Frost_PLD_Settings.Instance.DefaultTargets.Keys.ToList())
         {
             // 第一列：显示技能名称
             ImGui.Text(skill);
             ImGui.NextColumn();
 
             // 第二列：显示下拉框
-            TargetType currentTarget = Frost_PLD_Settings.DefaultTargets[skill];
+            TargetType currentTarget = Frost_PLD_Settings.Instance.DefaultTargets[skill];
             int currentIndex = (int)currentTarget;
             if (ImGui.Combo($"###DefaultTarget_{skill}", ref currentIndex, targetTypes, targetTypes.Length))
             {
-                Frost_PLD_Settings.DefaultTargets[skill] = (TargetType)currentIndex;
+                Frost_PLD_Settings.Instance.DefaultTargets[skill] = (TargetType)currentIndex;
                 Frost_PLD_Settings.Instance.Save();
             }
             ImGui.NextColumn();
@@ -95,11 +106,11 @@ public class Frost_PLD_SettingUI
             if ((TargetType)currentIndex == TargetType.Name || (TargetType)currentIndex == TargetType.DataID)
             {
                 string extra = "";
-                if (Frost_PLD_Settings.DefaultTargetsInfo.ContainsKey(skill))
-                    extra = Frost_PLD_Settings.DefaultTargetsInfo[skill];
+                if (Frost_PLD_Settings.Instance.DefaultTargetsInfo.ContainsKey(skill))
+                    extra = Frost_PLD_Settings.Instance.DefaultTargetsInfo[skill];
                 if (ImGui.InputText($"###Extra_{skill}", ref extra, 20))
                 {
-                    Frost_PLD_Settings.DefaultTargetsInfo[skill] = extra;
+                    Frost_PLD_Settings.Instance.DefaultTargetsInfo[skill] = extra;
                     Frost_PLD_Settings.Instance.Save();
                 }
             }
@@ -109,6 +120,7 @@ public class Frost_PLD_SettingUI
             }
             ImGui.NextColumn();
         }
+
 
         if (ImGui.Button("Save"))
         {

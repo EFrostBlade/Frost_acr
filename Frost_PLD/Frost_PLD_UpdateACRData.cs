@@ -28,6 +28,8 @@ using Frost.Frost_PLD.Frost_PLD_Data;
 using Frost.Frost_PLD.Frost_PLD_Setting;
 using Frost.Frost_PLD.Frost_PLD_Data;
 using Frost.Frost_PLD.Frost_PLD_Setting;
+using Frost.Frost_PLD.Frost_PLD_Data;
+using Frost.Frost_PLD.Frost_PLD_Setting;
 
 namespace Frost.Frost_PLD
 {
@@ -719,6 +721,7 @@ namespace Frost.Frost_PLD
         {
             var battleData = Frost_PLD_BattleData.Instance;
             var QT = Frost_PLD_RotationEntry.JobViewWindow;
+            var SC = Frost_PLD_RotationEntry.scWindow;
             if (Frost_PLD_Settings.Instance.启用qt控制盾姿)
             {
                 bool isShieldActive = GameObjectExtension.HasAura(Core.Me, (uint)PLDBuffID.钢铁信念);
@@ -750,6 +753,341 @@ namespace Frost.Frost_PLD
                             Frost_PLD_DutyData.Instance.上次疾跑时间 = DateTime.Now;
                         }
                     }
+                }
+            }
+            if (Core.Resolve<MemApiCondition>().IsBoundByDuty()
+                && Core.Resolve<MemApiMove>().IsMoving()
+                && Frost_PLD_Settings.Instance.自动拉怪突进)
+            {
+                if (Frost_PLD_DutyData.Instance.副本人数 == 4 || Frost_PLD_DutyData.Instance.副本人数 == 24)
+                {
+                    if (TargetMgr.Instance.EnemysIn20 != null)
+                    {
+                        // 创建一个EnemysIn20的副本，避免在遍历时集合被修改导致异常
+                        var enemyList = new Dictionary<uint, IBattleChara>(TargetMgr.Instance.EnemysIn20);
+                        foreach (var keyValuePair in enemyList)
+                        {
+                            if (CanUseOGCD_NoCombat((uint)PLDActionID.调停))
+                            {
+                                IBattleChara enemy = keyValuePair.Value;
+                                if (GameObjectExtension.Distance(Core.Me, enemy, DistanceMode.IgnoreAll) > 12
+                                    && Core.Resolve<MemApiSpell>().CheckActionInRangeOrLoS((uint)PLDActionID.调停, enemy))
+                                {
+                                    // 计算目标是否在当前面向范围内
+                                    var directionToTarget = enemy.Position - Core.Me.Position;
+                                    var forPLDdDirection = new Vector3((float)Math.Sin(Core.Me.Rotation), 0, (float)Math.Cos(Core.Me.Rotation));
+                                    var angle = Math.Acos(Vector3.Dot(Vector3.Normalize(forPLDdDirection), Vector3.Normalize(directionToTarget))) * (180.0 / Math.PI);
+
+                                    if (angle <= 40)
+                                    {
+                                        Slot slot = new Slot();
+                                        slot.Add(new Spell((uint)PLDActionID.调停, enemy));
+                                        await slot.Run(AI.Instance.BattleData, isNextSlot: false);
+                                        Frost_PLD_RotationEntry.Frost_PLD_ArcUI.AddLog($"自动突进{enemy.Name}拉怪");
+                                        Core.Resolve<MemApiChatMessage>().Toast2($"自动突进{enemy.Name}拉怪", 1, 2000);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            if (SC.GetSC("神圣领域"))
+            {
+                if (CanUseOGCD_NoCombat((uint)PLDActionID.神圣领域))
+                {
+                    await SpellHelper.GetSpell((uint)PLDActionID.神圣领域).Cast();
+                }
+            }
+            if (SC.GetSC("极致防御"))
+            {
+                if (Core.Me.Level >= 92)
+                {
+                    if (CanUseOGCD_NoCombat((uint)PLDActionID.极致防御))
+                    {
+                        await SpellHelper.GetSpell((uint)PLDActionID.极致防御).Cast();
+                    }
+                }
+                else
+                {
+                    if (CanUseOGCD_NoCombat((uint)PLDActionID.预警))
+                    {
+                        await SpellHelper.GetSpell((uint)PLDActionID.预警).Cast();
+                    }
+                }
+            }
+            if (SC.GetSC("铁壁"))
+            {
+                if (CanUseOGCD_NoCombat((uint)PLDActionID.铁壁))
+                {
+                    await SpellHelper.GetSpell((uint)PLDActionID.铁壁).Cast();
+                }
+            }
+            if (SC.GetSC("壁垒"))
+            {
+                if (CanUseOGCD_NoCombat((uint)PLDActionID.壁垒))
+                {
+                    await SpellHelper.GetSpell((uint)PLDActionID.壁垒).Cast();
+                }
+            }
+            if (SC.GetSC("圣盾阵"))
+            {
+                if (Core.Me.Level >= 82)
+                {
+                    if (CanUseOGCD_NoCombat((uint)PLDActionID.圣盾阵))
+                    {
+                        await SpellHelper.GetSpell((uint)PLDActionID.圣盾阵).Cast();
+                    }
+                }
+                else
+                {
+                    if (CanUseOGCD_NoCombat((uint)PLDActionID.盾阵))
+                    {
+                        await SpellHelper.GetSpell((uint)PLDActionID.盾阵).Cast();
+                    }
+                }
+            }
+            if (SC.GetSC("雪仇"))
+            {
+                if (CanUseOGCD_NoCombat((uint)PLDActionID.雪仇))
+                {
+                    await SpellHelper.GetSpell((uint)PLDActionID.雪仇).Cast();
+                }
+            }
+            if (SC.GetSC("圣光幕帘"))
+            {
+                if (CanUseOGCD_NoCombat((uint)PLDActionID.圣光幕帘))
+                {
+                    await SpellHelper.GetSpell((uint)PLDActionID.圣光幕帘).Cast();
+                }
+            }
+            if (SC.GetSC("亲疏自行"))
+            {
+                if (CanUseOGCD_NoCombat((uint)PLDActionID.亲疏自行))
+                {
+                    await SpellHelper.GetSpell((uint)PLDActionID.亲疏自行).Cast();
+                }
+            }
+            if (SC.GetSC("武装戍卫"))
+            {
+                if (CanUseOGCD_NoCombat((uint)PLDActionID.武装戍卫))
+                {
+
+                    // 通过 Core.Me 获取自身位置，其中 Position 为 Vector3 类型
+                    var self = Core.Me;
+                    Vector3 selfPos = self.Position;
+                    var allies = PartyHelper.CastableAlliesWithin10;
+                    int bestCount = 0;
+                    float bestAngle = 0;
+                    List<IBattleChara> bestEffectAlly = new List<IBattleChara>();
+
+                    // 遍历候选角度 0 ～ 359 度
+                    for (int candidateDeg = 0; candidateDeg < 360; candidateDeg++)
+                    {
+                        float rad = candidateDeg * MathF.PI / 180;
+                        // 构造候选方向向量（忽略 Y 轴高度，只考虑 XZ 平面）
+                        Vector3 candidateDir = new Vector3(MathF.Cos(rad), 0, MathF.Sin(rad));
+                        int count = 0;
+                        List<IBattleChara> effectAlly = new List<IBattleChara>();
+                        foreach (var ally in allies)
+                        {
+                            // 计算从自身到队友的向量
+                            Vector3 diff = ally.Position - selfPos;
+                            if (diff.Length() > 8f)
+                                continue;
+                            diff = Vector3.Normalize(diff);
+                            // 计算候选方向和队友方向的夹角（单位：度）
+                            float dot = Vector3.Dot(candidateDir, diff);
+                            float angleDeg = MathF.Acos(dot) * 180 / MathF.PI;
+                            // 检测队友是否落在候选扇形内（左右各 60°）
+                            if (angleDeg <= 60)
+                            {
+                                count++;
+                                effectAlly.Add(ally);
+                            }
+
+                        }
+                        if (count > bestCount)
+                        {
+                            bestCount = count;
+                            bestAngle = candidateDeg;
+                            bestEffectAlly = effectAlly;
+                        }
+                    }
+                    string log = $"最佳释放角度{bestAngle} 队友数量{bestCount}";
+                    string message = $"将覆盖{bestCount}名队友:";
+                    if (bestEffectAlly.Count > 0)
+                    {
+                        foreach (var ally in bestEffectAlly)
+                        {
+                            log += $" {ally.Name}";
+                            message += $"{ally.Name} ";
+                        }
+                    }
+                    Frost_PLD_RotationEntry.Frost_PLD_ArcUI.AddLog(log);
+                    LogHelper.Print("武装戍卫", message);
+
+
+                    // 将最佳面向转换为 SetRot 所需要的弧度值（0代表正南，π/2代表正东，-π/2代表正西）
+                    float candidateRad = bestAngle * MathF.PI / 180f;
+                    float setRot = candidateRad - 3f * MathF.PI / 2f;
+                    // 归一化到 [-π, π]
+                    while (setRot > MathF.PI)
+                        setRot -= 2f * MathF.PI;
+                    while (setRot < -MathF.PI)
+                        setRot += 2f * MathF.PI;
+                    Core.Resolve<MemApiMove>().SetRot(setRot);
+                    await SpellHelper.GetSpell((uint)PLDActionID.武装戍卫).Cast();
+                }
+            }
+            if (SC.GetSC("调停"))
+            {
+                if (CanUseOGCD_NoCombat((uint)PLDActionID.调停))
+                {
+                    IBattleChara? _target = SC.GetSCTarget("调停");
+                    if (_target != null)
+                    {
+                        if (_target.DistanceToPlayer() <= 20)
+                        {
+                            if (Core.Resolve<MemApiSpell>().CheckActionInRangeOrLoS((uint)PLDActionID.调停, _target))
+                            {
+                                await SpellHelper.GetSpell((uint)PLDActionID.调停, _target).Cast();
+                            }
+                        }
+                    }
+                }
+            }
+            if (SC.GetSC("下踢"))
+            {
+                if (CanUseOGCD_NoCombat((uint)PLDActionID.下踢))
+                {
+                    IBattleChara? _target = SC.GetSCTarget("下踢");
+                    if (_target != null)
+                    {
+                        if (_target.DistanceToPlayer() <= (float)SettingMgr.GetSetting<GeneralSettings>().AttackRange)
+                        {
+                            if (Core.Resolve<MemApiSpell>().CheckActionInRangeOrLoS((uint)PLDActionID.下踢, _target))
+                            {
+                                await SpellHelper.GetSpell((uint)PLDActionID.下踢, _target).Cast();
+                            }
+                        }
+                    }
+                }
+            }
+            if (SC.GetSC("插言"))
+            {
+                if (CanUseOGCD_NoCombat((uint)PLDActionID.插言))
+                {
+                    IBattleChara? _target = SC.GetSCTarget("插言");
+                    if (_target != null)
+                    {
+                        if (_target.DistanceToPlayer() <= (float)SettingMgr.GetSetting<GeneralSettings>().AttackRange)
+                        {
+                            if (Core.Resolve<MemApiSpell>().CheckActionInRangeOrLoS((uint)PLDActionID.插言, _target))
+                            {
+                                await SpellHelper.GetSpell((uint)PLDActionID.插言, _target).Cast();
+                            }
+                        }
+                    }
+                }
+            }
+            if (SC.GetSC("挑衅"))
+            {
+                if (CanUseOGCD_NoCombat((uint)PLDActionID.挑衅))
+                {
+                    IBattleChara? _target = SC.GetSCTarget("挑衅");
+                    if (_target != null)
+                    {
+                        if (_target.DistanceToPlayer() <= 20)
+                        {
+                            if (Core.Resolve<MemApiSpell>().CheckActionInRangeOrLoS((uint)PLDActionID.挑衅, _target))
+                            {
+                                await SpellHelper.GetSpell((uint)PLDActionID.挑衅, _target).Cast();
+                            }
+                        }
+                    }
+                }
+            }
+            if (SC.GetSC("退避"))
+            {
+                if (CanUseOGCD_NoCombat((uint)PLDActionID.调停))
+                {
+                    IBattleChara? _target = SC.GetSCTarget("调停");
+                    if (_target != null)
+                    {
+                        if (_target.DistanceToPlayer() <= 20)
+                        {
+                            if (Core.Resolve<MemApiSpell>().CheckActionInRangeOrLoS((uint)PLDActionID.调停, _target))
+                            {
+                                await SpellHelper.GetSpell((uint)PLDActionID.调停, _target).Cast();
+                            }
+                        }
+                    }
+                }
+            }
+            if (SC.GetSC("干预"))
+            {
+                if (CanUseOGCD_NoCombat((uint)PLDActionID.调停))
+                {
+                    IBattleChara? _target = SC.GetSCTarget("调停");
+                    if (_target != null)
+                    {
+                        if (_target.DistanceToPlayer() <= 20)
+                        {
+                            if (Core.Resolve<MemApiSpell>().CheckActionInRangeOrLoS((uint)PLDActionID.调停, _target))
+                            {
+                                await SpellHelper.GetSpell((uint)PLDActionID.调停, _target).Cast();
+                            }
+                        }
+                    }
+                }
+            }
+            if (SC.GetSC("保护"))
+            {
+                if (CanUseOGCD_NoCombat((uint)PLDActionID.调停))
+                {
+                    IBattleChara? _target = SC.GetSCTarget("调停");
+                    if (_target != null)
+                    {
+                        if (_target.DistanceToPlayer() <= 20)
+                        {
+                            if (Core.Resolve<MemApiSpell>().CheckActionInRangeOrLoS((uint)PLDActionID.调停, _target))
+                            {
+                                await SpellHelper.GetSpell((uint)PLDActionID.调停, _target).Cast();
+                            }
+                        }
+                    }
+                }
+            }
+            if (SC.GetSC("深仁厚泽"))
+            {
+                if (CanUseOGCD_NoCombat((uint)PLDActionID.调停))
+                {
+                    IBattleChara? _target = SC.GetSCTarget("调停");
+                    if (_target != null)
+                    {
+                        if (_target.DistanceToPlayer() <= 20)
+                        {
+                            if (Core.Resolve<MemApiSpell>().CheckActionInRangeOrLoS((uint)PLDActionID.调停, _target))
+                            {
+                                await SpellHelper.GetSpell((uint)PLDActionID.调停, _target).Cast();
+                            }
+                        }
+                    }
+                }
+            }
+            if (SC.GetSC("钢铁信念"))
+            {
+                if (CanUseOGCD_NoCombat((uint)PLDActionID.钢铁信念))
+                {
+                    await SpellHelper.GetSpell((uint)PLDActionID.钢铁信念).Cast();
+                }
+            }
+            if (SC.GetSC("冲刺"))
+            {
+                if (CanUseOGCD_NoCombat((uint)PLDActionID.冲刺))
+                {
+                    await SpellHelper.GetSpell((uint)PLDActionID.冲刺).Cast();
                 }
             }
 
