@@ -17,22 +17,20 @@ namespace Frost.Frost_PLD.Frost_PLD_Triggers
         public string DisplayName { get; } = "PLD/使用技能";
         public string Remark { get; set; }
 
-        private int _selectIndex;
-        private float _waitTime = Frost_PLD_Settings.Instance.cd预检测阈值;
-        private bool _forceInsert = false;
-        private int _targetIndex = 0;
-        private string[] _targetOptions = Enum.GetNames(typeof(Common.TargetType));
-        private string _targetInfo = "";
+        public int _selectIndex;
+        public float _waitTime = Frost_PLD_Settings.Instance.cd预检测阈值;
+        public bool _forceInsert = false;
+        public int _targetIndex = 0;
+        public string[] _targetOptions = Enum.GetNames(typeof(Common.TargetType));
+        public string _targetInfo = "";
 
-        private enum _SpellArray : uint
+        public enum _SpellArray : uint
         {
             冲刺 = 3u,
             调停 = 16461u,
             钢铁信念 = 28u,
-            预警 = 17u,
             极致防御 = 36920u,
             壁垒 = 22u,
-            盾阵 = 3542u,
             圣盾阵 = 25746u,
             干预 = 7382u,
             保护 = 27u,
@@ -49,8 +47,8 @@ namespace Frost.Frost_PLD.Frost_PLD_Triggers
             亲疏自行 = 7548u,
         }
 
-        private string[] _spellNameArray = Enum.GetNames(typeof(_SpellArray));
-        private uint[] _spellValueArray = (uint[])Enum.GetValues(typeof(_SpellArray));
+        public string[] _spellNameArray = Enum.GetNames(typeof(_SpellArray));
+        public uint[] _spellValueArray = (uint[])Enum.GetValues(typeof(_SpellArray));
 
         public bool Draw()
         {

@@ -66,16 +66,21 @@ public class FRU_Opener : IOpener
 
     public void InitCountDown(CountDownHandler countDownHandler)
     {
+        Action action = () =>
+        {
+            Frost_PLD_RotationEntry.JobViewWindow.SetQt("盾姿", false);
+        };
         //倒计时处理
         countDownHandler.AddAction(12000, 冲刺, SpellTargetType.Self);
         countDownHandler.AddAction(10000, 圣光幕帘, SpellTargetType.Self);
+        countDownHandler.AddAction(4000, action);
         countDownHandler.AddAction(4000, 解除钢铁信念, SpellTargetType.Self);
         if (Frost_PLD_RotationEntry.JobViewWindow.GetQt("爆发药"))
         {
             countDownHandler.AddPotionAction(3000);
         }
-        countDownHandler.AddAction(2000, 圣灵, SpellTargetType.Target);
-        countDownHandler.AddAction(400, 调停, SpellTargetType.Target);
+        countDownHandler.AddAction(1800, 圣灵, SpellTargetType.Target);
+        countDownHandler.AddAction(230, 调停, SpellTargetType.Target);
     }
     public List<Action<Slot>> Sequence { get; } = new()
     {
@@ -119,6 +124,7 @@ public class FRU_Opener : IOpener
     {
         slot.Add(new Spell(悔罪, SpellTargetType.Target));
         slot.Add(new Spell(钢铁信念, SpellTargetType.Self));
+        Frost_PLD_RotationEntry.JobViewWindow.SetQt("盾姿", true);
         //slot.Add(new Spell(雪仇, SpellTargetType.Self));
     }
     private static void Step5(Slot slot)

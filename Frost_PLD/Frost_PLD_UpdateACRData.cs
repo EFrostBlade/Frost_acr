@@ -600,6 +600,11 @@ namespace Frost.Frost_PLD
             }
             else
             {
+                battleData.ResolverState = 5;
+            }
+            /*
+            else
+            {
                 //BOSS快打完泄资源
                 if (!battleData.已开泄资源
                     && (battleData.当前战斗状态 == 战斗状态.四人本BOSS战斗即将结束
@@ -680,6 +685,7 @@ namespace Frost.Frost_PLD
                     battleData.ResolverState = 5;
                 }
             }
+            */
         }
         public static async Task OnNoCombat()
         {

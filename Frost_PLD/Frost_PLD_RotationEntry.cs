@@ -213,15 +213,26 @@ public class Frost_PLD_RotationEntry : IRotationEntry
         new(new 前置_关盾(),SlotMode.Always),
 
         //以下是技能使用
+        new(new 技能使用_神圣领域(),SlotMode.Always),
         new(new 技能使用_冲刺(),SlotMode.Always),
         new(new 技能使用_钢铁信念(),SlotMode.Always),
         new(new 技能使用_极致防御(),SlotMode.Always),
+        new(new 技能使用_铁壁(),SlotMode.Always),
         new(new 技能使用_壁垒(),SlotMode.Always),
         new(new 技能使用_圣盾阵(),SlotMode.Always),
-        new(new 技能使用_神圣领域(),SlotMode.Always),
         new(new 技能使用_圣光幕帘(),SlotMode.Always),
-        new(new 技能使用_铁壁(),SlotMode.Always),
         new(new 技能使用_武装戍卫(),SlotMode.Always),
+        new(new 技能使用_雪仇(),SlotMode.Always),
+        new(new 技能使用_亲疏自行(),SlotMode.Always),
+        new(new 技能使用_调停(),SlotMode.Always),
+        new(new 技能使用_下踢(),SlotMode.Always),
+        new(new 技能使用_插言(),SlotMode.Always),
+        new(new 技能使用_挑衅(),SlotMode.Always),
+        new(new 技能使用_退避(),SlotMode.Always),
+        new(new 技能使用_干预(),SlotMode.Always),
+        new(new 技能使用_保护(),SlotMode.Always),
+        new(new 技能使用_深仁厚泽(),SlotMode.Always),
+
 
         //以下是GCD        
         new(new BOSS中_战逃葬送剑即将过期(),SlotMode.Always),

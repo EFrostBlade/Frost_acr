@@ -21,6 +21,7 @@ namespace Frost.Frost_PLD.Frost_PLD_SlotResolvers
             {
                 return -1;
             }
+            if()
             if (BattleData.神圣魔法效果提高剩余时间 > 0)
             {
                 return -3;
