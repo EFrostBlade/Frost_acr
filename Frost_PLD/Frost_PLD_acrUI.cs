@@ -86,6 +86,9 @@ namespace Frost.Frost_PLD
             interpolatedStringHandler.AppendLiteral($"战斗开始时长：{minutes}分{seconds}秒，{battleData.战斗开始时长}");
             ImGui.Text(interpolatedStringHandler.ToStringAndClear());
             interpolatedStringHandler = new DefaultInterpolatedStringHandler(10, 1);
+            interpolatedStringHandler.AppendLiteral($"已远离目标时间：{battleData.已远离目标时间}");
+            ImGui.Text(interpolatedStringHandler.ToStringAndClear());
+            interpolatedStringHandler = new DefaultInterpolatedStringHandler(10, 1);
             interpolatedStringHandler.AppendLiteral($"上次连击技能{battleData.上次连击技能}");
             ImGui.Text(interpolatedStringHandler.ToStringAndClear());
             interpolatedStringHandler = new DefaultInterpolatedStringHandler(10, 1);

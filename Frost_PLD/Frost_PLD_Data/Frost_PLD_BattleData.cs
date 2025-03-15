@@ -34,6 +34,9 @@ namespace Frost.Frost_PLD.Frost_PLD_Data
         public static Frost_PLD_BattleData Instance = new();
         public Spell? nextOGCD = null;
         public Spell? nextGCD = null;
+        public bool 是否远离目标 = false;
+        public long 上次远离目标时间 = 0;
+        public long 已远离目标时间 = 0;
         public uint 上次魔法连击技能 = 0;
         public long 上次魔法连击时间 = 0;
         public float 魔法连击剩余时间 = 0;

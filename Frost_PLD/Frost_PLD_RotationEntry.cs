@@ -167,10 +167,11 @@ public class Frost_PLD_RotationEntry : IRotationEntry
     public void BuildSC()
     {
         Frost_PLD_Settings Setting = Frost_PLD_Settings.Instance;
-        scWindow= new SCWindow();
+        scWindow = new SCWindow();
         // 添加按钮
         scWindow.AddSC("钢铁信念", Setting.cd预检测阈值, false, TargetType.自身);
         scWindow.AddSC("冲刺", Setting.cd预检测阈值, false, TargetType.自身);
+        scWindow.AddSC("战逃反应", Setting.cd预检测阈值, false, TargetType.自身);
         scWindow.AddSC("极致防御", Setting.cd预检测阈值, false, TargetType.自身);
         scWindow.AddSC("壁垒", Setting.cd预检测阈值, false, TargetType.自身);
         scWindow.AddSC("圣盾阵", Setting.cd预检测阈值, false, TargetType.自身);
@@ -231,6 +232,7 @@ public class Frost_PLD_RotationEntry : IRotationEntry
         new(new 技能使用_退避(),SlotMode.Always),
         new(new 技能使用_干预(),SlotMode.Always),
         new(new 技能使用_保护(),SlotMode.Always),
+        new(new 技能使用_战逃反应(),SlotMode.Always),
         new(new 技能使用_深仁厚泽(),SlotMode.Always),
 
 
@@ -253,6 +255,8 @@ public class Frost_PLD_RotationEntry : IRotationEntry
         new(new BOSS中_战逃战女神之怒(),SlotMode.Always),
         new(new BOSS中_战逃暴乱剑(),SlotMode.Always),
         new(new BOSS中_战逃先锋剑(),SlotMode.Always),
+        new(new BOSS中_远离圣灵(),SlotMode.Always),
+        new(new BOSS中_远离投盾(),SlotMode.Always),
 
 
         new(new BOSS中_战逃外葬送剑即将过期(),SlotMode.Always),
@@ -287,7 +291,11 @@ public class Frost_PLD_RotationEntry : IRotationEntry
 
     private IOpener? GetOpener(uint level)//设置起手
     {
-        return new FRU_Opener();
+        if ((Core.Resolve<MemApiZoneInfo>().GetCurrTerrId() == 1238))
+        {
+            return new FRU_Opener();
+        }
+        return new PLD_100_Opener();
     }
     // 设置界面
     public void OnDrawSetting()

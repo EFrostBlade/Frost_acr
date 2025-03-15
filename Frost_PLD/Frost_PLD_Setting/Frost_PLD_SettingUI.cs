@@ -33,6 +33,12 @@ public class Frost_PLD_SettingUI
             Frost_PLD_Settings.Instance.远离投盾圣灵阈值 = 远离投盾圣灵阈值;
             Frost_PLD_Settings.Instance.Save();
         }
+        int 远离圣灵蓝量阈值 = Frost_PLD_Settings.Instance.远离圣灵蓝量阈值;
+        if (ImGui.InputInt("远离使用圣灵时保留蓝量", ref 远离圣灵蓝量阈值))
+        {
+            Frost_PLD_Settings.Instance.远离投盾圣灵阈值 = 远离圣灵蓝量阈值;
+            Frost_PLD_Settings.Instance.Save();
+        }
         int 保留调停层数 = Frost_PLD_Settings.Instance.保留调停层数;
         if (ImGui.SliderInt("保留调停层数", ref 保留调停层数, 0, 2, $"{保留调停层数}层"))
         {

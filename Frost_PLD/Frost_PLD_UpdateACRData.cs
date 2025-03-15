@@ -42,6 +42,23 @@ namespace Frost.Frost_PLD
             var QT = Frost_PLD_RotationEntry.JobViewWindow;
             battleData.目标距离 = GameObjectExtension.Distance(Core.Me, Core.Me.GetCurrTarget(), DistanceMode.IgnoreAll);
             battleData.目标是否在近战范围内 = battleData.目标距离 <= (float)SettingMgr.GetSetting<GeneralSettings>().AttackRange;
+            if (!battleData.目标是否在近战范围内)
+            {
+                if (!battleData.是否远离目标)
+                {
+                    battleData.是否远离目标 = true;
+                    battleData.上次远离目标时间 = battleData.战斗开始时长;
+                }
+                else
+                {
+                    battleData.已远离目标时间 = battleData.战斗开始时长 - battleData.上次远离目标时间;
+                }
+            }
+            else
+            {
+                battleData.是否远离目标 = false;
+                battleData.已远离目标时间 = 0;
+            }
             battleData.自身血量记录.AddLast((Core.Me.CurrentHp, battleData.战斗开始时长));
             if (battleData.自身血量记录.Count > 12000)
             {
@@ -1004,7 +1021,7 @@ namespace Frost.Frost_PLD
                     IBattleChara? _target = SC.GetSCTarget("挑衅");
                     if (_target != null)
                     {
-                        if (_target.DistanceToPlayer() <= 20)
+                        if (_target.DistanceToPlayer() <= 25)
                         {
                             if (Core.Resolve<MemApiSpell>().CheckActionInRangeOrLoS((uint)PLDActionID.挑衅, _target))
                             {
@@ -1016,16 +1033,16 @@ namespace Frost.Frost_PLD
             }
             if (SC.GetSC("退避"))
             {
-                if (CanUseOGCD_NoCombat((uint)PLDActionID.调停))
+                if (CanUseOGCD_NoCombat((uint)PLDActionID.退避))
                 {
-                    IBattleChara? _target = SC.GetSCTarget("调停");
+                    IBattleChara? _target = SC.GetSCTarget("退避");
                     if (_target != null)
                     {
-                        if (_target.DistanceToPlayer() <= 20)
+                        if (_target.DistanceToPlayer() <= 25)
                         {
-                            if (Core.Resolve<MemApiSpell>().CheckActionInRangeOrLoS((uint)PLDActionID.调停, _target))
+                            if (Core.Resolve<MemApiSpell>().CheckActionInRangeOrLoS((uint)PLDActionID.退避, _target))
                             {
-                                await SpellHelper.GetSpell((uint)PLDActionID.调停, _target).Cast();
+                                await SpellHelper.GetSpell((uint)PLDActionID.退避, _target).Cast();
                             }
                         }
                     }
@@ -1033,16 +1050,16 @@ namespace Frost.Frost_PLD
             }
             if (SC.GetSC("干预"))
             {
-                if (CanUseOGCD_NoCombat((uint)PLDActionID.调停))
+                if (CanUseOGCD_NoCombat((uint)PLDActionID.干预))
                 {
-                    IBattleChara? _target = SC.GetSCTarget("调停");
+                    IBattleChara? _target = SC.GetSCTarget("干预");
                     if (_target != null)
                     {
-                        if (_target.DistanceToPlayer() <= 20)
+                        if (_target.DistanceToPlayer() <= 30)
                         {
-                            if (Core.Resolve<MemApiSpell>().CheckActionInRangeOrLoS((uint)PLDActionID.调停, _target))
+                            if (Core.Resolve<MemApiSpell>().CheckActionInRangeOrLoS((uint)PLDActionID.干预, _target))
                             {
-                                await SpellHelper.GetSpell((uint)PLDActionID.调停, _target).Cast();
+                                await SpellHelper.GetSpell((uint)PLDActionID.干预, _target).Cast();
                             }
                         }
                     }
@@ -1050,33 +1067,41 @@ namespace Frost.Frost_PLD
             }
             if (SC.GetSC("保护"))
             {
-                if (CanUseOGCD_NoCombat((uint)PLDActionID.调停))
+                if (CanUseOGCD_NoCombat((uint)PLDActionID.保护))
                 {
-                    IBattleChara? _target = SC.GetSCTarget("调停");
+                    IBattleChara? _target = SC.GetSCTarget("保护");
                     if (_target != null)
                     {
                         if (_target.DistanceToPlayer() <= 20)
                         {
-                            if (Core.Resolve<MemApiSpell>().CheckActionInRangeOrLoS((uint)PLDActionID.调停, _target))
+                            if (Core.Resolve<MemApiSpell>().CheckActionInRangeOrLoS((uint)PLDActionID.保护, _target))
                             {
-                                await SpellHelper.GetSpell((uint)PLDActionID.调停, _target).Cast();
+                                await SpellHelper.GetSpell((uint)PLDActionID.保护, _target).Cast();
                             }
                         }
                     }
                 }
             }
+            if (SC.GetSC("战逃反应"))
+            {
+                if (CanUseOGCD_NoCombat((uint)PLDActionID.战逃反应))
+                {
+                    await SpellHelper.GetSpell((uint)PLDActionID.战逃反应).Cast();
+
+                }
+            }
             if (SC.GetSC("深仁厚泽"))
             {
-                if (CanUseOGCD_NoCombat((uint)PLDActionID.调停))
+                if (CanUseOGCD_NoCombat((uint)PLDActionID.深仁厚泽))
                 {
-                    IBattleChara? _target = SC.GetSCTarget("调停");
+                    IBattleChara? _target = SC.GetSCTarget("深仁厚泽");
                     if (_target != null)
                     {
-                        if (_target.DistanceToPlayer() <= 20)
+                        if (_target.DistanceToPlayer() <= 30)
                         {
-                            if (Core.Resolve<MemApiSpell>().CheckActionInRangeOrLoS((uint)PLDActionID.调停, _target))
+                            if (Core.Resolve<MemApiSpell>().CheckActionInRangeOrLoS((uint)PLDActionID.深仁厚泽, _target))
                             {
-                                await SpellHelper.GetSpell((uint)PLDActionID.调停, _target).Cast();
+                                await SpellHelper.GetSpell((uint)PLDActionID.深仁厚泽, _target).Cast();
                             }
                         }
                     }

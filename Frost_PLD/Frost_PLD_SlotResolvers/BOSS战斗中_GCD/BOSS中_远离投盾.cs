@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Frost.Frost_PLD.Frost_PLD_SlotResolvers
 {
-    internal class BOSS中_远离圣灵 : Frost_PLD_ISlotResolver
+    internal class BOSS中_远离投盾 : Frost_PLD_ISlotResolver
     {
         public override int Check()
         {
@@ -25,24 +25,12 @@ namespace Frost.Frost_PLD.Frost_PLD_SlotResolvers
             {
                 return -2;
             }
-            if (BattleData.神圣魔法效果提高剩余时间 > 0)
-            {
-                return -3;
-            }
             if (BattleData.目标是否在近战范围内)
             {
                 return -4;
             }
-            if (Core.Resolve<MemApiMove>().IsMoving())
-            {
-                return -5;
-            }
-            if (Core.Me.CurrentMp < Setting.远离圣灵蓝量阈值)
-            {
-                return -6;
-            }
 
-            int baseCheck = CanUseGCD((uint)PLDActionID.圣灵, false);
+            int baseCheck = CanUseGCD((uint)PLDActionID.投盾, false);
             if (baseCheck != 0)
             {
                 return baseCheck;
@@ -52,17 +40,17 @@ namespace Frost.Frost_PLD.Frost_PLD_SlotResolvers
                 foreach (var keyValuePair in TargetMgr.Instance.EnemysIn25)
                 {
                     IBattleChara battleChara = keyValuePair.Value;
-                    if (Core.Resolve<MemApiSpell>().CheckActionInRangeOrLoS((uint)PLDActionID.圣灵, battleChara))
+                    if (Core.Resolve<MemApiSpell>().CheckActionInRangeOrLoS((uint)PLDActionID.投盾, battleChara))
                     {
-                        SpellID = (uint)PLDActionID.圣灵;
+                        SpellID = (uint)PLDActionID.投盾;
                         target = battleChara;
                         return base.Check();
                     }
                 }
             }
-            if (Core.Resolve<MemApiSpell>().CheckActionInRangeOrLoS((uint)PLDActionID.圣灵, BattleData.当前目标))
+            if (Core.Resolve<MemApiSpell>().CheckActionInRangeOrLoS((uint)PLDActionID.投盾, BattleData.当前目标))
             {
-                SpellID = (uint)PLDActionID.圣灵;
+                SpellID = (uint)PLDActionID.投盾;
                 target = BattleData.当前目标;
                 return base.Check();
             }

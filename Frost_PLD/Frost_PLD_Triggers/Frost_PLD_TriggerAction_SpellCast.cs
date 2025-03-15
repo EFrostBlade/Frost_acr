@@ -45,6 +45,7 @@ namespace Frost.Frost_PLD.Frost_PLD_Triggers
             插言 = 7538u,
             下踢 = 7540u,
             亲疏自行 = 7548u,
+            战逃反应 = 20u,
         }
 
         public string[] _spellNameArray = Enum.GetNames(typeof(_SpellArray));
