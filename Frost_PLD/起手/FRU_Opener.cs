@@ -2,10 +2,12 @@
 using AEAssist.CombatRoutine;
 using AEAssist.CombatRoutine.Module;
 using AEAssist.CombatRoutine.Module.Opener;
+using AEAssist.CombatRoutine.Module.Target;
 using AEAssist.Extension;
 using AEAssist.Helper;
 using AEAssist.MemoryApi;
 using Frost;
+using Frost.Common;
 
 namespace test.JOB.Opener;
 
@@ -70,8 +72,14 @@ public class FRU_Opener : IOpener
         {
             Frost_PLD_RotationEntry.JobViewWindow.SetQt("盾姿", false);
         };
+        Action setTarget = () =>
+        {
+            var target = TargetMgr.Instance.Units.Values.First(u => u.DataId is 17819);
+            Core.Resolve<MemApiTarget>().SetTarget(target);
+        };
         //倒计时处理
         countDownHandler.AddAction(12000, 冲刺, SpellTargetType.Self);
+        countDownHandler.AddAction(12000, setTarget);
         countDownHandler.AddAction(10000, 圣光幕帘, SpellTargetType.Self);
         countDownHandler.AddAction(4000, action);
         countDownHandler.AddAction(4000, 解除钢铁信念, SpellTargetType.Self);
@@ -79,8 +87,8 @@ public class FRU_Opener : IOpener
         {
             countDownHandler.AddPotionAction(3000);
         }
-        countDownHandler.AddAction(1800, 圣灵, SpellTargetType.Target);
-        countDownHandler.AddAction(230, 调停, SpellTargetType.Target);
+        countDownHandler.AddAction(1500, 圣灵, SpellTargetType.Target);
+        countDownHandler.AddAction(0, 调停, SpellTargetType.Target);
     }
     public List<Action<Slot>> Sequence { get; } = new()
     {
@@ -167,10 +175,14 @@ public class FRU_Opener : IOpener
     }
     private static void Step13(Slot slot)
     {
+        Frost_PLD_RotationEntry.scWindow.SetSCDuration("极致防御", 5);
+        Frost_PLD_RotationEntry.scWindow.SetSC("极致防御", true);
+        Frost_PLD_RotationEntry.scWindow.SetSCDuration("壁垒", 5);
+        Frost_PLD_RotationEntry.scWindow.SetSC("壁垒", true);
+        Frost_PLD_RotationEntry.scWindow.SetSCTarget("干预", TargetType.搭档);
+        Frost_PLD_RotationEntry.scWindow.SetSCDuration("干预", 5);
+        Frost_PLD_RotationEntry.scWindow.SetSC("干预", true);
         slot.Add(new Spell(葬送剑, SpellTargetType.Target));
         slot.Add(new Spell(偿赎剑, SpellTargetType.Target));
-        slot.Add(new Spell(极致防御, SpellTargetType.Self));
-        slot.Add(new Spell(壁垒, SpellTargetType.Self));
-        slot.Add(new Spell(干预, SpellTargetType.Pm2));
     }
 }

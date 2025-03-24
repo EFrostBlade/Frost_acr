@@ -231,6 +231,10 @@ namespace Frost.Frost_PLD.Frost_PLD_SlotResolvers
         }
         public static IBattleChara? GetAOETarget(float distance = 25f, float range = 5f)
         {
+            if(!Frost_PLD_RotationEntry.JobViewWindow.GetQt("智能aoe"))
+            {
+                return Frost_PLD_BattleData.Instance.当前目标;
+            }
             Dictionary<uint, IBattleChara> enemys = TargetMgr.Instance.Enemys;
             if (enemys.Count == 0) return null;
 

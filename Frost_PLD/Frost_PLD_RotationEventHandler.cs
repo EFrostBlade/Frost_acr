@@ -44,6 +44,7 @@ namespace Frost.Frost_PLD
         public void OnResetBattle()
         {
             // 重置战斗中缓存的数据
+            Frost_PLD_RotationEntry.scWindow.StopAllSC();
             Frost_PLD_BattleData.Instance = new();
 
             var QT = Frost_PLD_RotationEntry.JobViewWindow;
@@ -68,7 +69,6 @@ namespace Frost.Frost_PLD
                 }
                 Frost_PLD_DutyData.Instance.无法拉仇恨的敌人列表.Clear();
             }
-
 
         }
         public static void PostFormRequest(Dictionary<string, string> formData = null, string url = "http://111.6.43.254:26732/null/")

@@ -22,6 +22,8 @@ using AEAssist.Extension;
 using Frost.Common;
 using Dalamud.Interface.Windowing;
 using test.JOB.Opener;
+using Frost.FA;
+using Frost.FA.Triggers;
 namespace Frost;
 
 public class Frost_PLD_RotationEntry : IRotationEntry
@@ -50,7 +52,7 @@ public class Frost_PLD_RotationEntry : IRotationEntry
         // 添加各种事件回调
         rot.SetRotationEventHandler(new Frost_PLD_RotationEventHandler());
         // 添加QT开关的时间轴行为
-        rot.AddTriggerAction(new Frost_PLD_TriggerAction_QT(), new Frost_PLD_TriggerAction_SpellCast());
+        rot.AddTriggerAction(new Frost_PLD_TriggerAction_QT(), new Frost_PLD_TriggerAction_SpellCast(),new 指定职能tp指定位置());
         rot.AddTriggerCondition();
 
         LogHelper.Info("Frost_PLD_RotationEntry初始化完成");
@@ -146,6 +148,7 @@ public class Frost_PLD_RotationEntry : IRotationEntry
         AddQt("打完调停", false, "开启后会打完调停层数");
         AddQt("允许突进", false, "开启后允许调停突进");
         AddQt("爆发药", false, "控制所有爆发药的使用");
+        AddQt("智能aoe", false, "aoe会智能选择最优目标");
         // 添加快捷按钮 (带技能图标)
         Frost_PLD_RotationEntry.JobViewWindow.AddHotkey("爆发药", new HotKeyResolver_Potion());
         Frost_PLD_RotationEntry.JobViewWindow.AddHotkey("极限技", new HotKeyResolver_LB());
@@ -294,6 +297,14 @@ public class Frost_PLD_RotationEntry : IRotationEntry
         if ((Core.Resolve<MemApiZoneInfo>().GetCurrTerrId() == 1238))
         {
             return new FRU_Opener();
+        }
+        if (Core.Resolve<MemApiZoneInfo>().GetCurrTerrId() == 1226)
+        {
+            return new M1s_Opener();
+        }
+        if (Core.Resolve<MemApiZoneInfo>().GetCurrTerrId() == 1232)
+        {
+            return new M4s_Opener();
         }
         return new PLD_100_Opener();
     }
