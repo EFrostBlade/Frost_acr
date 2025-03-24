@@ -102,14 +102,10 @@ public class 连线大圈 : ITriggerScript
                     if (连线1名字 != "" && 连线2名字 != "" && 大圈1名字 != "" && 大圈2名字 != "" && !浮空)
                     {
                         Share.DebugPointWithText.Clear();
-                        连线1职能 = RemoteControlHelper.GetRoleByPlayerName(连线1名字);
-                        if (连线1职能 == "") 连线1职能 = "MT";
-                        连线2职能 = RemoteControlHelper.GetRoleByPlayerName(连线2名字);
-                        if (连线2职能 == "") 连线2职能 = "ST";
-                        大圈1职能 = RemoteControlHelper.GetRoleByPlayerName(大圈1名字);
-                        if (大圈1职能 == "") 大圈1职能 = "H1";
-                        大圈2职能 = RemoteControlHelper.GetRoleByPlayerName(大圈2名字);
-                        if (大圈2职能 == "") 大圈2职能 = "H2";
+                        连线1职能 = scriptEnv.KV[连线1名字].ToString();
+                        连线2职能 = scriptEnv.KV[连线2名字].ToString();
+                        大圈1职能 = scriptEnv.KV[大圈1名字].ToString();
+                        大圈2职能 = scriptEnv.KV[大圈2名字].ToString();
                         LogHelper.Print("连线1职能: " + 连线1职能);
                         LogHelper.Print("连线2职能: " + 连线2职能);
                         LogHelper.Print("大圈1职能: " + 大圈1职能);
