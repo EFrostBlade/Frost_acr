@@ -7,6 +7,7 @@ using AEAssist.Helper;
 using AEAssist.MemoryApi;
 using Dalamud.Game.ClientState.Objects.Types;
 using Frost.Frost_WAR.Frost_WAR_Data;
+using Frost.Frost_WAR.Frost_WAR_Setting;
 using Frost.HOOK;
 
 
@@ -35,7 +36,10 @@ namespace Frost.Frost_WAR.Frost_WAR_SlotResolvers
                 {
                     Core.Resolve<MemApiChatMessage>().Toast2($"蛮荒即将过期，请靠近boss并停止移动或开启允许突进", 2, 3000);
                     ChatHelper.Print.Echo("蛮荒即将过期，请靠近boss并停止移动或开启允许突进<se.1><se.1><se.1>");
-                    ChatHelper.SendMessage("/pdr tts 靠近boss停止移动");
+                    if (Frost_WAR_Settings.Instance.语音提示)
+                    {
+                        ChatHelper.SendMessage("/pdr tts 靠近boss停止移动");
+                    }
                     BattleData.蛮荒过期提醒 = true;
                 }
             }

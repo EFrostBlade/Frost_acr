@@ -26,7 +26,10 @@ namespace Frost.Frost_WAR.Frost_WAR_SlotResolvers
             {
                 Core.Resolve<MemApiChatMessage>().Toast2($"猛攻即将溢出，请靠近boss并停止移动或开启允许突进", 1, 3000);
                 ChatHelper.Print.Echo("猛攻即将溢出，请靠近boss并停止移动或开启允许突进<se.1><se.1><se.1>");
-                ChatHelper.SendMessage("/pdr tts 猛攻即将溢出");
+                if(Setting.语音提示)
+                {
+                    ChatHelper.SendMessage("/pdr tts 猛攻即将溢出");
+                }
                 BattleData.猛攻溢出提醒 = true;
             }
             if (SpellHelper.GetSpell((uint)WARActionID.猛攻).Charges < 2.9f)

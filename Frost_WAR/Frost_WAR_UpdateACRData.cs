@@ -451,7 +451,10 @@ namespace Frost.Frost_WAR
                         battleData.蛮荒崩裂预备剩余时间 = Math.Abs(status.RemainingTime);
                         if (battleData.蛮荒崩裂预备剩余时间 == 0 && battleData.蛮荒过期提醒 == true)
                         {
-                            ChatHelper.SendMessage("/pdr tts 你少打了一个蛮荒，悲痛吧");
+                            if (Frost_WAR_Settings.Instance.语音提示)
+                            {
+                                ChatHelper.SendMessage("/pdr tts 你少打了一个蛮荒，悲痛吧");
+                            }
                             battleData.蛮荒过期提醒 = false;
                         }
                     }

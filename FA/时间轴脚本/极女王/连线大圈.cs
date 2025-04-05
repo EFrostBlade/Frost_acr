@@ -112,12 +112,22 @@ public class 连线大圈 : ITriggerScript
                         LogHelper.Print("大圈2职能: " + 大圈2职能);
                         Share.DebugPointWithText.Add(连线1职能, new Vector3(92, 0, 94));
                         RemoteControlHelper.SetPos(连线1职能, new Vector3(92, 0, 94));
-                        Share.DebugPointWithText.Add(连线2职能, new Vector3(92, 0, 94));
-                        RemoteControlHelper.SetPos(连线2职能, new Vector3(92, 0, 94));
+                        Share.DebugPointWithText.Add(连线2职能, new Vector3(108, 0, 94));
+                        RemoteControlHelper.SetPos(连线2职能, new Vector3(108, 0, 94));
                         Share.DebugPointWithText.Add(大圈1职能, new Vector3(92, 0, 94));
                         RemoteControlHelper.SetPos(大圈1职能, new Vector3(92, 0, 94));
-                        Share.DebugPointWithText.Add(大圈2职能, new Vector3(92, 0, 94));
-                        RemoteControlHelper.SetPos(大圈2职能, new Vector3(92, 0, 94));
+                        Share.DebugPointWithText.Add(大圈2职能, new Vector3(108, 0, 94));
+                        RemoteControlHelper.SetPos(大圈2职能, new Vector3(108, 0, 94));
+                        List<string> allRoles = new List<string> { "MT", "ST", "H1", "H2", "D1", "D2", "D3", "D4" };
+                        HashSet<string> usedRoles = new HashSet<string> { 连线1职能, 连线2职能, 大圈1职能, 大圈2职能 };
+                        List<string> remainingRoles = allRoles.Where(role => !usedRoles.Contains(role)).ToList();
+
+                        for (int i = 0; i < remainingRoles.Count; i++)
+                        {
+                            string role = remainingRoles[i];
+                            Share.DebugPointWithText.Add(role, new Vector3(95, 0, 95));
+                            RemoteControlHelper.SetPos(role, new Vector3(95, 0, 95));
+                        }
                         浮空 = true;
                     }
                     if (浮空)

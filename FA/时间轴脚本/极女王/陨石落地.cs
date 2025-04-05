@@ -10,7 +10,7 @@ using System.Threading;
 
 namespace ScriptTest;
 
-public class 放陨石 : ITriggerScript
+public class 陨石落地 : ITriggerScript
 {
     public IBattleChara? MT = null;
     public IBattleChara? ST = null;
@@ -20,7 +20,7 @@ public class 放陨石 : ITriggerScript
     public IBattleChara? D2 = null;
     public IBattleChara? D3 = null;
     public IBattleChara? D4 = null;
-    public bool 浮空 = false;
+    public bool 落地 = false;
     public bool Completed = false;
 
     // 锁对象
@@ -57,7 +57,7 @@ public class 放陨石 : ITriggerScript
                     D4 = (IBattleChara)scriptEnv.KV["D4"];
                     if (MT != null && ST != null && H1 != null && H2 != null && D1 != null && D2 != null && D3 != null && D4 != null)
                     {
-                        if (!浮空)
+                        if (!落地)
                         {
                             Share.DebugPointWithText.Clear();
                             if (MT.HasAura(3770))
@@ -68,8 +68,8 @@ public class 放陨石 : ITriggerScript
                             }
                             else
                             {
-                                Share.DebugPointWithText.Add("MT", new Vector3(105, 0, 95));
-                                RemoteControlHelper.SetPos("MT", new Vector3(105, 0, 95));
+                                Share.DebugPointWithText.Add("MT", new Vector3(95, 0, 95));
+                                RemoteControlHelper.SetPos("MT", new Vector3(95, 0, 95));
                             }
                             if (ST.HasAura(3770))
                             {
@@ -79,18 +79,30 @@ public class 放陨石 : ITriggerScript
                             }
                             else
                             {
-                                Share.DebugPointWithText.Add("ST", new Vector3(195, 0, 95));
+                                Share.DebugPointWithText.Add("ST", new Vector3(95, 0, 95));
                                 RemoteControlHelper.SetPos("ST", new Vector3(95, 0, 95));
                             }
-                            if (!H1.HasAura(3770))
+                            if (H1.HasAura(3770))
                             {
                                 Share.DebugPointWithText.Add("H1", new Vector3(92, 0, 94));
-                                RemoteControlHelper.SetPos("H1", new Vector3(92, 0, 94));
+                                RemoteControlHelper.SetPos("H1", new Vector3(90, 0, 92));
+                                RemoteControlHelper.MoveTo("H1", new Vector3(92, 0, 94));
                             }
-                            if (!H2.HasAura(3770))
+                            else
+                            {
+                                Share.DebugPointWithText.Add("H1", new Vector3(95, 0, 95));
+                                RemoteControlHelper.SetPos("H1", new Vector3(95, 0, 95));
+                            }
+                            if (H2.HasAura(3770))
                             {
                                 Share.DebugPointWithText.Add("H2", new Vector3(92, 0, 94));
-                                RemoteControlHelper.SetPos("H2", new Vector3(92, 0, 94));
+                                RemoteControlHelper.SetPos("H2", new Vector3(90, 0, 92));
+                                RemoteControlHelper.MoveTo("H2", new Vector3(92, 0, 94));
+                            }
+                            else
+                            {
+                                Share.DebugPointWithText.Add("H2", new Vector3(95, 0, 95));
+                                RemoteControlHelper.SetPos("H2", new Vector3(95, 0, 95));
                             }
                             if (D1.HasAura(3770))
                             {
@@ -100,8 +112,8 @@ public class 放陨石 : ITriggerScript
                             }
                             else
                             {
-                                Share.DebugPointWithText.Add("D1", new Vector3(105, 0, 95));
-                                RemoteControlHelper.SetPos("D1", new Vector3(105, 0, 95));
+                                Share.DebugPointWithText.Add("D1", new Vector3(95, 0, 95));
+                                RemoteControlHelper.SetPos("D1", new Vector3(95, 0, 95));
                             }
                             if (D2.HasAura(3770))
                             {
@@ -111,43 +123,39 @@ public class 放陨石 : ITriggerScript
                             }
                             else
                             {
-                                Share.DebugPointWithText.Add("D2", new Vector3(195, 0, 95));
+                                Share.DebugPointWithText.Add("D2", new Vector3(95, 0, 95));
                                 RemoteControlHelper.SetPos("D2", new Vector3(95, 0, 95));
                             }
-                            if (!D3.HasAura(3770))
+                            if (D3.HasAura(3770))
                             {
                                 Share.DebugPointWithText.Add("D3", new Vector3(92, 0, 94));
-                                RemoteControlHelper.SetPos("D3", new Vector3(92, 0, 94));
+                                RemoteControlHelper.SetPos("D3", new Vector3(90, 0, 92));
+                                RemoteControlHelper.MoveTo("D3", new Vector3(92, 0, 94));
                             }
-                            if (!D4.HasAura(3770))
+                            else
+                            {
+                                Share.DebugPointWithText.Add("D3", new Vector3(95, 0, 95));
+                                RemoteControlHelper.SetPos("D3", new Vector3(95, 0, 95));
+                            }
+                            if (D4.HasAura(3770))
                             {
                                 Share.DebugPointWithText.Add("D4", new Vector3(92, 0, 94));
-                                RemoteControlHelper.SetPos("D4", new Vector3(92, 0, 94));
+                                RemoteControlHelper.SetPos("D4", new Vector3(90, 0, 92));
+                                RemoteControlHelper.MoveTo("D4", new Vector3(92, 0, 94));
                             }
-                            浮空 = true;
+                            else
+                            {
+                                Share.DebugPointWithText.Add("D4", new Vector3(95, 0, 95));
+                                RemoteControlHelper.SetPos("D4", new Vector3(95, 0, 95));
+                            }
+                            落地 = true;
                         }
-                        if (浮空)
+                        if (落地)
                         {
-                            if (!MT.HasAura(3770) && !ST.HasAura(3770) && H1.HasAura(3770) && H2.HasAura(3770) && !D1.HasAura(3770) && !D2.HasAura(3770) && D3.HasAura(3770) && D4.HasAura(3770))
+                            if (!MT.HasAura(3770) && !ST.HasAura(3770) && !H1.HasAura(3770) && !H2.HasAura(3770) && !D1.HasAura(3770) && !D2.HasAura(3770) && !D3.HasAura(3770) && !D4.HasAura(3770))
                             {
                                 RemoteControlHelper.MoveStop("");
                                 Share.DebugPointWithText.Clear();
-                                Share.DebugPointWithText.Add("MT", new Vector3(92, 0, 86.2f));
-                                RemoteControlHelper.SetPos("MT", new Vector3(92, 0, 86.2f));
-                                Share.DebugPointWithText.Add("ST", new Vector3(108, 0, 86.2f));
-                                RemoteControlHelper.SetPos("ST", new Vector3(108, 0, 86.2f));
-                                Share.DebugPointWithText.Add("H1", new Vector3(100, 0, 94));
-                                RemoteControlHelper.SetPos("H1", new Vector3(100, 0, 94));
-                                Share.DebugPointWithText.Add("H2", new Vector3(100, 0, 94));
-                                RemoteControlHelper.SetPos("H2", new Vector3(100, 0, 94));
-                                Share.DebugPointWithText.Add("D1", new Vector3(92, 0, 95f));
-                                RemoteControlHelper.SetPos("D1", new Vector3(92, 0, 95f));
-                                Share.DebugPointWithText.Add("D2", new Vector3(108, 0, 95f));
-                                RemoteControlHelper.SetPos("D2", new Vector3(108, 0, 95f));
-                                Share.DebugPointWithText.Add("D3", new Vector3(100, 0, 94));
-                                RemoteControlHelper.SetPos("D3", new Vector3(100, 0, 94));
-                                Share.DebugPointWithText.Add("D4", new Vector3(100, 0, 94));
-                                RemoteControlHelper.SetPos("D4", new Vector3(100, 0, 94));
                                 Completed = true;
                             }
                         }

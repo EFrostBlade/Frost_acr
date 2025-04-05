@@ -52,6 +52,7 @@ public class Frost_WAR_Settings
     public bool 自动拉怪突进 = true;
     public bool 自动疾跑 = true;
     public bool 自动减伤使用提示 = true;
+    public bool 语音提示 = false;
     public int 死斗血量阈值 = 10;
     public int 泰然血量阈值 = 40;
     public double cd预检测阈值 = 3;
